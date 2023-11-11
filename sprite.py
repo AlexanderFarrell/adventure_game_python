@@ -1,10 +1,15 @@
 import pygame
 
 sprites = []
+loaded = {}
 
 class Sprite:
     def __init__(self, image, x, y):
-        self.image = pygame.image.load(image)
+        if image in loaded:
+            self.image = loaded[image]
+        else:
+            self.image = pygame.image.load(image)
+            loaded[image] = self.image
         self.x = x
         self.y = y
         sprites.append(self)

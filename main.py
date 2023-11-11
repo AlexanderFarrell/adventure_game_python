@@ -23,14 +23,20 @@ tile_kinds = [
 player = Player("images/player.png", 32*11, 32*7)
 map = Map("maps/start.map", tile_kinds, 32)
 
-Sprite("images/tree.png", 0 * 32, 0*32)
-Sprite("images/tree.png", 5 * 32, 1*32)
-Sprite("images/tree.png", 10*32, 4*32)
-Sprite("images/tree.png", 7*32, 2*32)
-Sprite("images/tree.png", 1*32, 10*32)
-Sprite("images/tree.png", 12*32, -1*32)
-Sprite("images/tree.png", 13*32, 12*32)
-Sprite("images/tree.png", 2*32, 8*32)
+Sprite("images/tree.png", 0 * 32, 0 * 32)
+Sprite("images/tree.png", 7 * 32, 2 * 32)
+Sprite("images/tree.png", 1 * 32, 10* 32)
+Sprite("images/tree.png", 12* 32, -1* 32)
+Sprite("images/tree.png", 14* 32, 9 * 32)
+Sprite("images/tree.png", 12* 32, -1* 32)
+Sprite("images/tree.png", 13* 32, 12* 32)
+Sprite("images/tree.png", 20* 32, 9 * 32)
+Sprite("images/tree.png", 22* 32, -1* 32)
+Sprite("images/tree.png", 24* 32, 12* 32)
+Sprite("images/tree.png", 2 * 32, 8 * 32)
+Sprite("images/tree.png", 15* 32, 15* 32)
+Sprite("images/tree.png", 17 * 32,1 * 32)
+Sprite("images/tree.png", 1 * 32, 15 * 32)
 
 
 # Game Loop

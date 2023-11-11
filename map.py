@@ -8,6 +8,9 @@ class TileKind:
 
 class Map:
     def __init__(self, map_file, tile_kinds, tile_size):
+        # Keep a list of different kinds of files (grass, sand, water, etc.)
+        self.tile_kinds = tile_kinds
+
         # Load the data from the file
         file = open(map_file, "r")
         data = file.read()
@@ -21,9 +24,6 @@ class Map:
                 row.append(int(tile_number))
             self.tiles.append(row)
 
-        # Keep a list of different kinds of files (grass, sand, water, etc.)
-        self.tile_kinds = tile_kinds
-
         # How big in pixels are the tiles?
         self.tile_size = tile_size
 
@@ -33,4 +33,5 @@ class Map:
             # Within the current row, go through each tile
             for x, tile in enumerate(row):
                 location = (x * self.tile_size, y * self.tile_size)
-                screen.blit(tile.image, location)
+                image = self.tile_kinds[tile].image
+                screen.blit(image, location)

@@ -5,6 +5,7 @@ from input import keys_down
 from map import Map, TileKind
 from camera import create_screen
 from entity import Entity, active_objs
+from physics import Body
 
 # Set up 
 pygame.init()
@@ -21,11 +22,11 @@ tile_kinds = [
     TileKind("water", "images/water.png", False),
     TileKind("wood", "images/wood.png", False)
 ]
-player = Entity(Player(), Sprite("images/player.png"))
+player = Entity(Player(), Sprite("images/player.png"), Body(0, 32, 32, 32), x=5*32, y=5*32)
 map = Map("maps/start.map", tile_kinds, 32)
 
 def place_tree(x, y):
-    Entity(Sprite("images/tree.png"), x=x * 32, y=y * 32)
+    Entity(Sprite("images/tree.png"), Body(0, 96, 64, 32), x=x * 32, y=y * 32)
 
 place_tree(0, 0)
 place_tree(7, 2)

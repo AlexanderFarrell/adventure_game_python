@@ -1,6 +1,8 @@
 import pygame
 from camera import camera
 
+map = None
+
 class TileKind:
     def __init__(self, name, image, is_solid):
         self.name = name

@@ -25,23 +25,23 @@ tile_kinds = [
 player = Entity(Player(), Sprite("images/player.png"), Body(8, 48, 16, 16), x=5*32, y=5*32)
 map = Map("maps/start.map", tile_kinds, 32)
 
-def place_tree(x, y):
-    Entity(Sprite("images/tree.png"), Body(0, 96, 64, 32), x=x * 32, y=y * 32)
+def make_tree(x, y):
+    Entity(Sprite("images/tree.png"), x=x, y=y)
 
-place_tree(0, 0)
-place_tree(7, 2)
-place_tree(1, 10)
-place_tree(12, -1)
-place_tree(14, 9)
-place_tree(12, -1)
-place_tree(13, 12)
-place_tree(20, 9)
-place_tree(22, -1)
-place_tree(24, 12)
-place_tree(2, 8)
-place_tree(15, 15)
-place_tree(17, 1)
-place_tree(1, 15)
+make_tree(0 * 32, 0 * 32)
+make_tree(7 * 32, 2 * 32)
+make_tree(1 * 32, 10* 32)
+make_tree(12* 32, -1* 32)
+make_tree(14* 32, 9 * 32)
+make_tree(12* 32, -1* 32)
+make_tree(13* 32, 12* 32)
+make_tree(20* 32, 9 * 32)
+make_tree(22* 32, -1* 32)
+make_tree(24* 32, 12* 32)
+make_tree(2 * 32, 8 * 32)
+make_tree(15* 32, 15* 32)
+make_tree(17 * 32,1 * 32)
+make_tree(1 * 32, 15 * 32)
 
 
 # Game Loop

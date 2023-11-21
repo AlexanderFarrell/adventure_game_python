@@ -30,37 +30,3 @@ class Body:
             return True
         else:
             return False
-
-    # def validate_position(self):
-    #     for body in bodies:
-    #         self.validate_position_with(body)
-
-    # def validate_position_with(self, other):
-    #     left = self.entity.x + self.hitbox.x
-    #     top = self.entity.y + self.hitbox.y
-    #     right = left + self.hitbox.width
-    #     bottom = top + self.hitbox.height
-
-    #     o_left = other.entity.x + other.hitbox.x
-    #     o_top = other.entity.y + other.hitbox.y
-    #     o_right = o_left + other.hitbox.width
-    #     o_bottom = o_top + other.hitbox.height
-
-    #     is_in_x = o_left < left < o_right or o_left < right < o_right
-    #     is_in_y = o_top < top < o_bottom or o_top < bottom < o_bottom
-
-    #     if is_in_x and o_top < top < o_bottom:
-    #         self.entity.y = o_bottom
-    #         print(left, top, right, bottom, o_left, o_top, o_right, o_bottom)
-    #     if is_in_x and o_top < bottom < o_bottom:
-    #         self.entity.y = o_top - self.hitbox.height
-    #         print(left, top, right, bottom, o_left, o_top, o_right, o_bottom)
-    #     if is_in_y and o_left < left < o_right:
-    #         self.entity.x = o_right
-    #         print(left, top, right, bottom, o_left, o_top, o_right, o_bottom)
-    #     if is_in_y and o_left < right < o_right:
-    #         self.entity.x = o_left - self.hitbox.width
-    #         print(left, top, right, bottom, o_left, o_top, o_right, o_bottom)
-        
-
-        

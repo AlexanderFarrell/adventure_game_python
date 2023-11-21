@@ -19,10 +19,10 @@ running = True
 tile_kinds = [
     TileKind("dirt", "images/dirt.png", False),
     TileKind("grass", "images/grass.png", False),
-    TileKind("water", "images/water.png", False),
+    TileKind("water", "images/water.png", True),
     TileKind("wood", "images/wood.png", False)
 ]
-player = Entity(Player(), Sprite("images/player.png"), Body(0, 32, 32, 32), x=5*32, y=5*32)
+player = Entity(Player(), Sprite("images/player.png"), Body(8, 48, 16, 16), x=5*32, y=5*32)
 map = Map("maps/start.map", tile_kinds, 32)
 
 def place_tree(x, y):

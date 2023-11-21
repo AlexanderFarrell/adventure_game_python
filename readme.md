@@ -21,5 +21,6 @@ This game is a tile-based 2D adventure game created with Pygame. The video for t
 | [main.py](./main.py)         | Brings everything together. Run this to start the game. |
 | [player.py](./player.py)     | The player, which can move around. |
 | [sprite.py](./sprite.py)     | An image which can be drawn to the screen. |
+| [camera.py](./camera.py)     | Determines how the player views the world. Sprites and map are effected by it.              |
 
 

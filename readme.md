@@ -1,6 +1,6 @@
 # Adventure Game in Pygame & Python
 
-This game is a tile-based 2D adventure game created with Pygame. The video for this step can be found here []()
+This game is a tile-based 2D adventure game created with Pygame. The video for this step can be found here [Tiles and Sprites in Pygame - Adventure Game Part 1](https://www.youtube.com/watch?v=w8i5sizgVNs)
 
 
 ## Setup

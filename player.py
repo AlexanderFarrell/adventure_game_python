@@ -2,22 +2,24 @@ import pygame
 from sprite import Sprite
 from input import is_key_pressed
 from camera import camera
+from entity import active_objs
 
 movement_speed = 2
 
-class Player(Sprite):
-    def __init__(self, image, x, y):
-        super().__init__(image, x, y)
+class Player:
+    def __init__(self):
+        active_objs.append(self)
 
     def update(self):
+        sprite = self.entity.get(Sprite)
         if is_key_pressed(pygame.K_w):
-            self.y -= movement_speed
+            self.entity.y -= movement_speed
         if is_key_pressed(pygame.K_s):
-            self.y += movement_speed
+            self.entity.y += movement_speed
         if is_key_pressed(pygame.K_a):
-            self.x -= movement_speed
+            self.entity.x -= movement_speed
         if is_key_pressed(pygame.K_d):
-            self.x += movement_speed
-        camera.x = self.x - camera.width/2 + self.image.get_width()/2
-        camera.y = self.y - camera.height/2 + self.image.get_height()/2
+            self.entity.x += movement_speed
+        camera.x = self.entity.x - camera.width/2 + sprite.image.get_width()/2
+        camera.y = self.entity.y - camera.height/2 + sprite.image.get_height()/2
 

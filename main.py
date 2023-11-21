@@ -4,6 +4,7 @@ from player import Player
 from input import keys_down
 from map import Map, TileKind
 from camera import create_screen
+from entity import Entity, active_objs
 
 # Set up 
 pygame.init()
@@ -20,23 +21,26 @@ tile_kinds = [
     TileKind("water", "images/water.png", False),
     TileKind("wood", "images/wood.png", False)
 ]
-player = Player("images/player.png", 32*11, 32*7)
+player = Entity(Player(), Sprite("images/player.png"))
 map = Map("maps/start.map", tile_kinds, 32)
 
-Sprite("images/tree.png", 0 * 32, 0 * 32)
-Sprite("images/tree.png", 7 * 32, 2 * 32)
-Sprite("images/tree.png", 1 * 32, 10* 32)
-Sprite("images/tree.png", 12* 32, -1* 32)
-Sprite("images/tree.png", 14* 32, 9 * 32)
-Sprite("images/tree.png", 12* 32, -1* 32)
-Sprite("images/tree.png", 13* 32, 12* 32)
-Sprite("images/tree.png", 20* 32, 9 * 32)
-Sprite("images/tree.png", 22* 32, -1* 32)
-Sprite("images/tree.png", 24* 32, 12* 32)
-Sprite("images/tree.png", 2 * 32, 8 * 32)
-Sprite("images/tree.png", 15* 32, 15* 32)
-Sprite("images/tree.png", 17 * 32,1 * 32)
-Sprite("images/tree.png", 1 * 32, 15 * 32)
+def place_tree(x, y):
+    Entity(Sprite("images/tree.png"), x=x * 32, y=y * 32)
+
+place_tree(0, 0)
+place_tree(7, 2)
+place_tree(1, 10)
+place_tree(12, -1)
+place_tree(14, 9)
+place_tree(12, -1)
+place_tree(13, 12)
+place_tree(20, 9)
+place_tree(22, -1)
+place_tree(24, 12)
+place_tree(2, 8)
+place_tree(15, 15)
+place_tree(17, 1)
+place_tree(1, 15)
 
 
 # Game Loop
@@ -50,7 +54,8 @@ while running:
             keys_down.remove(event.key)
 
     # Update Code
-    player.update()
+    for a in active_objs:
+        a.update()
 
     # Draw Code
     screen.fill(clear_color)

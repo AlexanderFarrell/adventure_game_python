@@ -5,20 +5,18 @@ sprites = []
 loaded = {}
 
 class Sprite:
-    def __init__(self, image, x, y):
+    def __init__(self, image):
         if image in loaded:
             self.image = loaded[image]
         else:
             self.image = pygame.image.load(image)
             loaded[image] = self.image
-        self.x = x
-        self.y = y
         sprites.append(self)
 
     def delete(self):
         sprites.remove(self)
 
     def draw(self, screen):
-        screen.blit(self.image, (self.x - camera.x, self.y - camera.y))
+        screen.blit(self.image, (self.entity.x - camera.x, self.entity.y - camera.y))
 
 # Load things uniquely.

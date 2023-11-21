@@ -1,4 +1,5 @@
 import pygame
+from math import ceil
 
 class TileKind:
     def __init__(self, name, image, is_solid):
@@ -26,6 +27,37 @@ class Map:
 
         # How big in pixels are the tiles?
         self.tile_size = tile_size
+
+    def is_point_solid(self, x, y):
+        x_tile = int(x/self.tile_size)
+        y_tile = int(y/self.tile_size)
+        if x_tile < 0 or \
+            y_tile < 0 or \
+            y_tile >= len(self.tiles) or \
+            x_tile >= len(self.tiles[y_tile]):
+            return False
+        tile = self.tiles[y_tile][x_tile]
+        return self.tile_kinds[tile].is_solid
+
+
+    def is_rect_solid(self, rect):
+        # Check the top left and middle (if bigger than tile size)
+        x_checks = int(ceil(rect.width/self.tile_size))
+        y_checks = int(ceil(rect.height/self.tile_size))
+        for yi in range(y_checks):
+            for xi in range(x_checks):
+                x = xi*self.tile_size + rect.x
+                y = yi*self.tile_size + rect.y
+                if self.is_point_solid(x, y):
+                    return True
+        if self.is_point_solid(rect.x + rect.width, rect.y):
+            return True
+        if self.is_point_solid(rect.x, rect.y + rect.height):
+            return True
+        if self.is_point_solid(rect.x + rect.width, rect.y + rect.height):
+            return True
+        return False
+
 
     def draw(self, screen):
         # Go row by row

@@ -3,13 +3,13 @@ from sprite import sprites, Sprite
 from player import Player
 from input import keys_down
 from map import Map, TileKind
-
+from camera import create_screen
 
 # Set up 
 pygame.init()
 
 pygame.display.set_caption("Adventure Game")
-screen = pygame.display.set_mode((800, 600))
+screen = create_screen(800, 600, "Adventure Game")
 
 clear_color = (30, 150, 50)
 running = True

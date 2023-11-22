@@ -1,6 +1,6 @@
 # Adventure Game in Pygame & Python
 
-This game is a tile-based 2D adventure game created with Pygame. The video for this step can be found here [Entities with Pygame - Adventure Game Part 3](https://youtu.be/zRKDARu3HWY).
+This game is a tile-based 2D adventure game created with Pygame. 
 
 
 ## Setup
@@ -21,6 +21,7 @@ This game is a tile-based 2D adventure game created with Pygame. The video for t
 | [images](./images)           | Sprites and tiles in the game. |
 | [input.py](./input.py)       | Helper code for User Input |
 | [main.py](./main.py)         | Brings everything together. Run this to start the game. |
+| [physics.py](./physics.py)   | Checks if collisions occur in the game |
 | [player.py](./player.py)     | The player, which can move around. |
 | [sprite.py](./sprite.py)     | An image which can be drawn to the screen. |
 

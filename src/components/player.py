@@ -1,9 +1,9 @@
 import pygame
-from sprite import Sprite
-from input import is_key_pressed
-from camera import camera
-from entity import active_objs
-from physics import Body
+from components.sprite import Sprite
+from core.input import is_key_pressed
+from core.camera import camera
+from components.entity import active_objs
+from components.physics import Body
 
 movement_speed = 2
 

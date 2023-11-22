@@ -8,7 +8,7 @@ class Body:
         bodies.append(self)
 
     def is_position_valid(self):
-        from map import map
+        from core.map import map
         x = self.entity.x + self.hitbox.x
         y = self.entity.y + self.hitbox.y
         if map.is_rect_solid(x, y, self.hitbox.width, self.hitbox.height):

@@ -1,11 +1,11 @@
 import pygame
-from sprite import sprites, Sprite
-from player import Player
-from input import keys_down
-from map import Map, TileKind
-from camera import create_screen
-from entity import Entity, active_objs
-from physics import Body
+from components.sprite import sprites, Sprite
+from components.player import Player
+from core.input import keys_down
+from core.map import Map, TileKind
+from core.camera import create_screen
+from components.entity import Entity, active_objs
+from components.physics import Body
 
 # Set up 
 pygame.init()

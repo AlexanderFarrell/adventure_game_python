@@ -1,5 +1,5 @@
-from entity import Entity
-from map import Map
+from components.entity import Entity
+from core.map import Map
 
 world = World()
 

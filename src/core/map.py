@@ -3,11 +3,13 @@ from core.camera import camera
 from math import ceil
 
 map = None
+map_folder_location = "content/maps"
+image_path = "content/images"
 
 class TileKind:
     def __init__(self, name, image, is_solid):
         self.name = name
-        self.image = pygame.image.load(image)
+        self.image = pygame.image.load(image_path + "/" + image)
         self.is_solid = is_solid
 
 class Map:
@@ -17,7 +19,7 @@ class Map:
         self.tile_kinds = tile_kinds
 
         # Load the data from the file
-        file = open(map_file, "r")
+        file = open(map_folder_location + "/" + map_file, "r")
         data = file.read()
         file.close()
 

@@ -1,6 +1,6 @@
 # Adventure Game in Pygame & Python
 
-This game is a tile-based 2D adventure game created with Pygame. The video for this step can be found here [Entities with Pygame - Adventure Game Part 3](https://youtu.be/zRKDARu3HWY).
+This game is a tile-based 2D adventure game created with Pygame. The video for this step can be found here [Organize Python Code into Folders - Adventure Game Part 5](https://youtu.be/QBxcTgH6Zw4?si=jaDcDwWTwlIL7rrJ).
 
 
 ## Quickstart

@@ -4,6 +4,7 @@ from core.camera import create_screen
 from components.entity import active_objs
 from core.area import Area, area
 from data.tile_types import tile_kinds
+from components.sprite import sprites
 
 # Set up 
 pygame.init()

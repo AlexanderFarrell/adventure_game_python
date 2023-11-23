@@ -13,16 +13,8 @@ class TileKind:
 
 class Map:
     def __init__(self, data, tile_kinds):
-        global map
         # Keep a list of different kinds of files (grass, sand, water, etc.)
         self.tile_kinds = tile_kinds
-
-        # Load the data from the file
-        # file = open(map_folder_location + "/" + map_file, "r")
-        # data = file.read()
-        # file.close()
-
-        map = self
 
         # Set up the tiles from loaded data
         self.tiles = []
@@ -42,7 +34,7 @@ class Map:
             y_tile < 0 or \
             y_tile >= len(self.tiles) or \
             x_tile >= len(self.tiles[y_tile]):
-            return False
+            return True
         tile = self.tiles[y_tile][x_tile]
         return self.tile_kinds[tile].is_solid
 

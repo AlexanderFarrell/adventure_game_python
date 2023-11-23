@@ -16,7 +16,16 @@ entity_factories = [
     lambda args: Entity(Sprite("rock.png"), Body()), 
 
     # 3
-    lambda args: Entity(Teleporter("another.map"))
+    lambda args: Entity(Teleporter(args[0], args[1], args[2]), Sprite("teleporter_up.png")),
+
+    # 4
+    lambda args: Entity(Teleporter(args[0], args[1], args[2]), Sprite("teleporter_right.png")),
+
+    # 5
+    lambda args: Entity(Teleporter(args[0], args[1], args[2]), Sprite("teleporter_down.png")),
+
+    # 6
+    lambda args: Entity(Teleporter(args[0], args[1], args[2]), Sprite("teleporter_right.png")),
 ]
 
 def create_entity(id, x, y, data=None):

@@ -12,7 +12,7 @@ pygame.init()
 pygame.display.set_caption("Adventure Game")
 screen = create_screen(800, 600, "Adventure Game")
 
-clear_color = (30, 150, 50)
+clear_color = (30, 150, 240)
 running = True
 
 area = Area("start.map", tile_kinds)

@@ -32,7 +32,6 @@ class Player:
         camera.x = self.entity.x - camera.width/2 + sprite.image.get_width()/2
         camera.y = self.entity.y - camera.height/2 + sprite.image.get_height()/2
 
-        print(len(triggers))
         for t in triggers:
             if body.is_colliding_with(t):
                 t.on()

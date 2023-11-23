@@ -39,10 +39,10 @@ class Body(PhysicalObj):
         bodies.append(self)
 
     def is_position_valid(self):
-        from core.map import map
+        from core.area import area
         x = self.entity.x + self.hitbox.x
         y = self.entity.y + self.hitbox.y
-        if map.is_rect_solid(x, y, self.hitbox.width, self.hitbox.height):
+        if area.map.is_rect_solid(x, y, self.hitbox.width, self.hitbox.height):
             return False
         for body in bodies:
             if body != self and body.is_colliding_with(self):

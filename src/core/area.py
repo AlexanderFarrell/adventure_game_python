@@ -11,11 +11,17 @@ class Area:
         self.load_file(area_file)
 
     def reset_everything(self):
-        from components.physics import reset_physics
-        from components.sprite import reset_sprites
+        from components.physics import triggers, bodies
+        from components.sprite import sprites
+        triggers.clear()
+        bodies.clear()
+        sprites.clear()
 
-        reset_sprites()
-        reset_physics()
+    def search_for_first(self, kind):
+        for e in self.entities:
+            c = e.get(kind)
+            if c is not None:
+                return e
 
     def load_file(self, area_file):
         from data.objects import create_entity

@@ -1,8 +1,9 @@
 from components.physics import Trigger
-# from core.area import area
+
 
 def teleport(area_file):
-    #area.load_file(area_file)
+    from core.area import area
+    area.load_file(area_file)
     print(area_file)
 
 

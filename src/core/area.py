@@ -1,5 +1,4 @@
 from core.map import Map
-from data.objects import create_entity
 
 area = None
 map_folder_location = "content/maps"
@@ -11,11 +10,22 @@ class Area:
         self.tile_types = tile_types
         self.load_file(area_file)
 
+    def reset_everything(self):
+        from components.physics import reset_physics
+        from components.sprite import reset_sprites
+
+        reset_sprites()
+        reset_physics()
+
     def load_file(self, area_file):
+        from data.objects import create_entity
+
         # Read all the data from the file
         file = open(map_folder_location + "/" + area_file, "r")
         data = file.read()
         file.close()
+
+        self.reset_everything()
 
         # Split up the data by minus signs
         chunks = data.split('-')

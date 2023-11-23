@@ -3,6 +3,10 @@ from pygame import Rect
 bodies = []
 triggers = []
 
+def reset_physics():
+    global bodies, triggers
+    bodies.clear()
+    triggers.clear()
 
 class PhysicalObj:
     def __init__(self, x, y, width, height):

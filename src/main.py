@@ -5,7 +5,6 @@ from components.entity import active_objs
 from core.area import Area, area
 from components.sprite import sprites
 from data.tile_types import tile_kinds
-from components.sprite import sprites
 
 # Set up 
 pygame.init()
@@ -16,7 +15,7 @@ screen = create_screen(800, 600, "Adventure Game")
 clear_color = (30, 150, 50)
 running = True
 
-area = Area("another.map", tile_kinds)
+area = Area("start.map", tile_kinds)
 
 
 # Game Loop

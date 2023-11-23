@@ -6,8 +6,13 @@ image_path = "content/images"
 sprites = []
 loaded = {}
 
+def reset_sprites():
+    global sprites
+    sprites.clear()
+
 class Sprite:
     def __init__(self, image):
+        global sprites
         if image in loaded:
             self.image = loaded[image]
         else:

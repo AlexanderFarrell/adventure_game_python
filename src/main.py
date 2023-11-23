@@ -6,6 +6,8 @@ from core.map import Map, TileKind
 from core.camera import create_screen
 from components.entity import Entity, active_objs
 from components.physics import Body
+from core.area import Area, area
+from data.tile_types import tile_kinds
 
 # Set up 
 pygame.init()
@@ -16,32 +18,7 @@ screen = create_screen(800, 600, "Adventure Game")
 clear_color = (30, 150, 50)
 running = True
 
-tile_kinds = [
-    TileKind("dirt", "dirt.png", False),
-    TileKind("grass", "grass.png", False),
-    TileKind("water", "water.png", True),
-    TileKind("wood", "wood.png", False)
-]
-player = Entity(Player(), Sprite("player.png"), Body(8, 48, 16, 16), x=5*32, y=5*32)
-map = Map("start.map", tile_kinds, 32)
-
-def make_tree(x, y):
-    Entity(Sprite("tree.png"), x=x, y=y)
-
-make_tree(0 * 32, 0 * 32)
-make_tree(7 * 32, 2 * 32)
-make_tree(1 * 32, 10* 32)
-make_tree(12* 32, -1* 32)
-make_tree(14* 32, 9 * 32)
-make_tree(12* 32, -1* 32)
-make_tree(13* 32, 12* 32)
-make_tree(20* 32, 9 * 32)
-make_tree(22* 32, -1* 32)
-make_tree(24* 32, 12* 32)
-make_tree(2 * 32, 8 * 32)
-make_tree(15* 32, 15* 32)
-make_tree(17 * 32,1 * 32)
-make_tree(1 * 32, 15 * 32)
+area = Area("another.map", tile_kinds)
 
 
 # Game Loop
@@ -60,7 +37,7 @@ while running:
 
     # Draw Code
     screen.fill(clear_color)
-    map.draw(screen)
+    area.map.draw(screen)
     for s in sprites:
         s.draw(screen)
     pygame.display.flip()

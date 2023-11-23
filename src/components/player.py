@@ -3,7 +3,7 @@ from components.sprite import Sprite
 from core.input import is_key_pressed
 from core.camera import camera
 from components.entity import active_objs
-from components.physics import Body
+from components.physics import Body, triggers
 
 movement_speed = 2
 
@@ -31,4 +31,8 @@ class Player:
             self.entity.x = previous_x
         camera.x = self.entity.x - camera.width/2 + sprite.image.get_width()/2
         camera.y = self.entity.y - camera.height/2 + sprite.image.get_height()/2
+
+        for t in triggers:
+            if body.is_colliding_with(t):
+                t.on()
 

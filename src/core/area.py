@@ -34,9 +34,9 @@ class Area:
                 id = int(items[0])
                 x = int(items[1])
                 y = int(items[2])
-                self.entities.append(create_entity(id, x, y, items))
-            except:
-                print(f"Error parsing line: {line}")
+                self.entities.append(create_entity(id, x, y, items[3:]))
+            except Exception as e:
+                print(f"Error parsing line: {line}. {e}")
 
 
 

@@ -3,6 +3,7 @@ from core.input import keys_down
 from core.camera import create_screen
 from components.entity import active_objs
 from core.area import Area, area
+from components.sprite import sprites
 from data.tile_types import tile_kinds
 
 # Set up 

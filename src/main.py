@@ -1,11 +1,7 @@
 import pygame
-from components.sprite import sprites, Sprite
-from components.player import Player
 from core.input import keys_down
-from core.map import Map, TileKind
 from core.camera import create_screen
-from components.entity import Entity, active_objs
-from components.physics import Body
+from components.entity import active_objs
 from core.area import Area, area
 from data.tile_types import tile_kinds
 

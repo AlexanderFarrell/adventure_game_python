@@ -17,9 +17,6 @@ entity_factories = [
 
 def create_entity(id, x, y, data=None):
     factory = entity_factories[id]
-    if callable(factory):
-        return factory(x*32, y*32)
-    else:
-        return factory.create(x*32, y*32, data)
+    return factory(x*32, y*32)
 
         

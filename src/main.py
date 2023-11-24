@@ -10,7 +10,7 @@ from data.tile_types import tile_kinds
 pygame.init()
 
 pygame.display.set_caption("Adventure Game")
-screen = create_screen(800, 600, "Adventure Game")
+screen = create_screen(1280, 720, "Adventure Game")
 
 clear_color = (30, 150, 240)
 running = True

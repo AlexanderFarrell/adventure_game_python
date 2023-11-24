@@ -13,9 +13,12 @@ class Area:
     def reset_everything(self):
         from components.physics import triggers, bodies
         from components.sprite import sprites
+        from components.entity import active_objs
         triggers.clear()
         bodies.clear()
         sprites.clear()
+        active_objs.clear()
+        self.entities = []
 
     def search_for_first(self, kind):
         for e in self.entities:

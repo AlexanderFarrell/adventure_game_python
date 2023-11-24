@@ -1,15 +1,22 @@
 import pygame
-from camera import camera
+from core.camera import camera
+
+image_path = "content/images"
 
 sprites = []
 loaded = {}
 
+def reset_sprites():
+    global sprites
+    sprites.clear()
+
 class Sprite:
     def __init__(self, image):
+        global sprites
         if image in loaded:
             self.image = loaded[image]
         else:
-            self.image = pygame.image.load(image)
+            self.image = pygame.image.load(image_path + "/" + image)
             loaded[image] = self.image
         sprites.append(self)
 

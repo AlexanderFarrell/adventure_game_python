@@ -1,27 +1,20 @@
 import pygame
-from camera import camera
 from math import ceil
 
-map = None
+map_folder_location = "content/maps"
+image_path = "content/images"
+tile_size = 32
 
 class TileKind:
     def __init__(self, name, image, is_solid):
         self.name = name
-        self.image = pygame.image.load(image)
+        self.image = pygame.image.load(image_path + "/" + image)
         self.is_solid = is_solid
 
 class Map:
-    def __init__(self, map_file, tile_kinds, tile_size):
-        global map
+    def __init__(self, data, tile_kinds):
         # Keep a list of different kinds of files (grass, sand, water, etc.)
         self.tile_kinds = tile_kinds
-
-        # Load the data from the file
-        file = open(map_file, "r")
-        data = file.read()
-        file.close()
-
-        map = self
 
         # Set up the tiles from loaded data
         self.tiles = []
@@ -41,7 +34,7 @@ class Map:
             y_tile < 0 or \
             y_tile >= len(self.tiles) or \
             x_tile >= len(self.tiles[y_tile]):
-            return False
+            return True
         tile = self.tiles[y_tile][x_tile]
         return self.tile_kinds[tile].is_solid
 
@@ -66,6 +59,7 @@ class Map:
 
     def draw(self, screen):
         # Go row by row
+        from core.camera import camera
         for y, row in enumerate(self.tiles):
             # Within the current row, go through each tile
             for x, tile in enumerate(row):

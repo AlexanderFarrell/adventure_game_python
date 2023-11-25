@@ -5,6 +5,7 @@ from components.entity import active_objs
 from core.area import Area, area
 from components.sprite import sprites
 from data.tile_types import tile_kinds
+from components.label import labels
 
 # Set up 
 pygame.init()
@@ -15,8 +16,9 @@ screen = create_screen(1280, 720, "Adventure Game")
 clear_color = (30, 150, 240)
 running = True
 
-area = Area("start.map", tile_kinds)
+area = Area("forest.map", tile_kinds)
 
+# Entity(Label("Arial", "Test this works"), x=0, y=0)
 
 # Game Loop
 while running:
@@ -35,8 +37,14 @@ while running:
     # Draw Code
     screen.fill(clear_color)
     area.map.draw(screen)
+    #sprites.sort(key=attrgetter("entity.y"))
     for s in sprites:
         s.draw(screen)
+
+    # Draw UI Stuff
+    for l in labels:
+        l.draw(screen)
+
     pygame.display.flip()
 
     # Cap the frames

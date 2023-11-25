@@ -11,7 +11,7 @@ def reset_sprites():
     sprites.clear()
 
 class Sprite:
-    def __init__(self, image):
+    def __init__(self, image, is_ui=False):
         global sprites
         if image in loaded:
             self.image = loaded[image]
@@ -19,11 +19,15 @@ class Sprite:
             self.image = pygame.image.load(image_path + "/" + image)
             loaded[image] = self.image
         sprites.append(self)
+        self.is_ui = is_ui
 
     def delete(self):
         sprites.remove(self)
 
     def draw(self, screen):
-        screen.blit(self.image, (self.entity.x - camera.x, self.entity.y - camera.y))
+        pos = (self.entity.x - camera.x, self.entity.y - camera.y) \
+                if not self.is_ui else \
+                (self.entity.x, self.entity.y)
+        screen.blit(self.image, pos)
 
 # Load things uniquely.

@@ -2,7 +2,7 @@ import pygame
 from components.sprite import Sprite
 from core.input import is_key_pressed
 from core.camera import camera
-from components.entity import active_objs, Entity
+from components.entity import Entity
 from components.label import Label
 from components.physics import Body, triggers
 from core.area import area
@@ -12,7 +12,8 @@ movement_speed = 2
 
 class Player:
     def __init__(self):
-        active_objs.append(self)
+        from core.engine import engine
+        engine.active_objs.append(self)
         self.loc_label = Entity(Label("main/EBGaramond-Regular.ttf", 
                                          "X: 0 - Y: 0")).get(Label)
         self.area_label = Entity(Label("main/EBGaramond-Regular.ttf", 

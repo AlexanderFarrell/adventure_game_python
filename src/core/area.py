@@ -10,18 +10,6 @@ class Area:
         self.tile_types = tile_types
         self.load_file(area_file)
 
-    def reset_everything(self):
-        from components.physics import triggers, bodies
-        from components.sprite import sprites
-        from components.entity import active_objs
-        from components.label import labels
-        triggers.clear()
-        bodies.clear()
-        sprites.clear()
-        active_objs.clear()
-        labels.clear()
-        self.entities = []
-
     def search_for_first(self, kind):
         for e in self.entities:
             c = e.get(kind)
@@ -30,6 +18,9 @@ class Area:
 
     def load_file(self, area_file):
         from data.objects import create_entity
+        from core.engine import engine
+        
+        engine.reset()
 
         # Read all the data from the file
         file = open(map_folder_location + "/" + area_file, "r")
@@ -37,7 +28,6 @@ class Area:
         file.close()
         self.name = area_file.split(".")[0].title().replace("_", " ")
 
-        self.reset_everything()
 
         # Split up the data by minus signs
         chunks = data.split('-')

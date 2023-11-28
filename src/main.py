@@ -1,6 +1,6 @@
 from core.engine import Engine
-from states.menu import menu
-from states.play import play
+from stages.menu import menu
+from stages.play import play
 
 e = Engine("Adventure Game")
 e.register("Menu", menu)

@@ -1,6 +1,5 @@
 import pygame
 from core.camera import camera
-from core.engine import engine
 
 image_path = "content/images"
 
@@ -8,6 +7,7 @@ loaded = {}
 
 class Sprite:
     def __init__(self, image, is_ui=False):
+        from core.engine import engine
         global sprites
         if image in loaded:
             self.image = loaded[image]

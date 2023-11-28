@@ -14,9 +14,9 @@ class Player:
     def __init__(self):
         from core.engine import engine
         engine.active_objs.append(self)
-        self.loc_label = Entity(Label("main/EBGaramond-Regular.ttf", 
+        self.loc_label = Entity(Label("EBGaramond-Regular.ttf", 
                                          "X: 0 - Y: 0")).get(Label)
-        self.area_label = Entity(Label("main/EBGaramond-Regular.ttf", 
+        self.area_label = Entity(Label("EBGaramond-Regular.ttf", 
                                        area.name)).get(Label)
         
         from core.camera import camera
@@ -38,6 +38,10 @@ class Player:
             self.entity.y += movement_speed
         if not body.is_position_valid():
             self.entity.y = previous_y
+
+        if is_key_pressed(pygame.K_ESCAPE):
+            from core.engine import engine
+            engine.switch_to("Menu")
 
         if is_key_pressed(pygame.K_a):
             self.entity.x -= movement_speed

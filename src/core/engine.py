@@ -19,19 +19,19 @@ class Engine:
 
         self.clear_color = (30, 150, 240) # Default color if nothing else is drawn somewhere
         self.screen = create_screen(default_width, default_height, game_title) # The rectangle in the window itself
-        self.states = {}
-        self.current_state = None
+        self.stages = {}
+        self.current_stage = None
 
-    def register(self, state_name, func):
-        self.states[state_name] = func
+    def register(self, stage_name, func):
+        self.stages[stage_name] = func
 
-    def switch_to(self, state_name):
+    def switch_to(self, stage_name):
         from core.area import area
         area = None
         self.reset()
-        self.current_state = state_name 
-        func = self.states[state_name]
-        print(f"Switching to {self.current_state}")
+        self.current_stage = stage_name 
+        func = self.stages[stage_name]
+        print(f"Switching to {self.current_stage}")
         func()
 
     def run(self):
@@ -70,8 +70,6 @@ class Engine:
 
             # Cap the frames
             pygame.time.delay(17)
-
-            # if self.next_state is not None:
                 
         pygame.quit()
 

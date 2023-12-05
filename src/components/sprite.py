@@ -9,15 +9,17 @@ class Sprite:
     def __init__(self, image, is_ui=False):
         from core.engine import engine
         global sprites
+        self.is_ui = is_ui
+
         if image in loaded:
             self.image = loaded[image]
         else:
             self.image = pygame.image.load(image_path + "/" + image)
             loaded[image] = self.image
         engine.drawables.append(self)
-        self.is_ui = is_ui
 
-    def delete(self):
+    def breakdown(self):
+        from core.engine import engine
         engine.drawables.remove(self)
 
     def draw(self, screen):

@@ -6,9 +6,11 @@ from components.entity import Entity
 from components.label import Label
 from components.physics import Body, triggers
 from core.area import area
-
+from components.inventory import Inventory
+from components.ui.inventory_view import InventoryView
 
 movement_speed = 2
+inventory = Inventory(20)
 
 class Player:
     def __init__(self):
@@ -18,12 +20,20 @@ class Player:
                                          "X: 0 - Y: 0")).get(Label)
         self.area_label = Entity(Label("EBGaramond-Regular.ttf", 
                                        area.name)).get(Label)
+        self.inventory_window = Entity(InventoryView(inventory))
         
         from core.camera import camera
         self.loc_label.entity.y = camera.height - 50
 
         self.loc_label.entity.x = 10
         self.area_label.entity.x = 10
+
+    # def __del__(self):
+    #     from core.engine import engine
+    #     engine.active_objs.remove(self)
+
+    def setup(self):
+        pass
 
     def update(self):
         self.loc_label.set_text(f"X: {self.entity.x} - Y: {self.entity.y}")
@@ -54,5 +64,5 @@ class Player:
 
         for t in triggers:
             if body.is_colliding_with(t):
-                t.on()
+                t.on(self.entity)
 

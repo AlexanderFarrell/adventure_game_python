@@ -29,4 +29,3 @@ class Entity:
             if isinstance(c, kind):
                 return c
         return None    
-        

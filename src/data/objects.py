@@ -3,6 +3,8 @@ from components.sprite import Sprite
 from components.player import Player
 from components.physics import Body
 from components.teleporter import Teleporter
+from components.inventory import Inventory, DroppedItem
+from data.item_types import item_types
 
 
 entity_factories = [
@@ -26,6 +28,9 @@ entity_factories = [
 
     # 6
     lambda args: Entity(Teleporter(args[0], args[1], args[2]), Sprite("teleporter_right.png")),
+
+    # 7
+    lambda args: Entity(DroppedItem(item_types[int(args[0])], int(args[1])), Sprite(item_types[int(args[0])].icon_name))
 ]
 
 def create_entity(id, x, y, data=None):

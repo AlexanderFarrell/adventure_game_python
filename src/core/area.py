@@ -15,6 +15,13 @@ class Area:
             c = e.get(kind)
             if c is not None:
                 return e
+            
+    def remove_entity(self, e):
+        self.entities.remove(e)
+        for c in e.components:
+            g = getattr(c, "breakdown", None)
+            if callable(g):
+                c.breakdown()
 
     def load_file(self, area_file):
         from data.objects import create_entity

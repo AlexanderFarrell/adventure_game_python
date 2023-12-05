@@ -32,11 +32,22 @@ class Trigger(PhysicalObj):
         triggers.append(self)
         self.on = on
 
+    def breakdown(self):
+        global triggers
+        triggers.remove(self)
+
+    # def __del__(self):
+    #     triggers.remove(self)
+
 
 class Body(PhysicalObj):
     def __init__(self, x=0, y=0, width=32, height=32):
         super().__init__(x, y, width, height)
         bodies.append(self)
+
+    def breakdown(self):
+        global bodies
+        bodies.remove(self)
 
     def is_position_valid(self):
         from core.area import area
@@ -48,5 +59,8 @@ class Body(PhysicalObj):
             if body != self and body.is_colliding_with(self):
                 return False
         return True
+
+    # def __del__(self):
+    #     bodies.remove(self)
     
     

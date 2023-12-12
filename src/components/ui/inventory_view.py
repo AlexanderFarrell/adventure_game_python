@@ -3,6 +3,7 @@ from math import ceil
 from components.entity import Entity
 from components.sprite import Sprite
 from components.ui.window import Window
+from components.label import Label
 
 items_per_row = 5
 padding_size = 5
@@ -43,6 +44,9 @@ class InventoryView:
             if slot.type is not None:
                 print(slot.type.name)
                 item_sprite = Entity(Sprite(slot.type.icon_name, True), x=x, y=y)
+                if slot.type.stack_size > 1:
+                    label = Entity(Label("EBGaramond-ExtraBold.ttf", str(slot.amount), color=(255, 255, 0), size=30), x=x, y=y)
+                    self.window.get(Window).items.append(label)
                 self.window.get(Window).items.append(item_sprite)
             column += 1
             if column >= items_per_row:
@@ -52,7 +56,10 @@ class InventoryView:
 
     def clear(self):
         for i in self.window.get(Window).items:
-            i.get(Sprite).breakdown()
+            if i.has(Sprite):
+                i.get(Sprite).breakdown()
+            elif i.has(Label):
+                i.get(Label).breakdown()
         self.window.get(Window).items.clear()
 
 

@@ -16,7 +16,6 @@ class Engine:
         # Layers of what order things are drawn. UI Drawables draw over Background for example
         self.background_drawables = []
         self.drawables = [] # Anything to be drawn in the world
-        self.ui_back_drawables = [] # Drawn over the world, drawn under other UI
         self.ui_drawables = [] # Anything to be drawn over the world
 
         self.clear_color = (30, 150, 240) # Default color if nothing else is drawn somewhere
@@ -64,17 +63,15 @@ class Engine:
             for b in self.background_drawables:
                 b.draw(self.screen)
 
+
             # Draw the main objects
             for s in self.drawables:
-                s.draw(self.screen)
-
-            # Draw Background UI Stuff
-            for s in self.ui_back_drawables:
                 s.draw(self.screen)
 
             # Draw UI Stuff
             for l in self.ui_drawables:
                 l.draw(self.screen)
+
 
             pygame.display.flip()
 

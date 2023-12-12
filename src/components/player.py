@@ -36,7 +36,7 @@ class Player:
         pass
 
     def update(self):
-        self.loc_label.set_text(f"X: {self.entity.x} - Y: {self.entity.y}")
+        self.loc_label.set_text(f"X: {int(self.entity.x/32)} - Y: {int(self.entity.y/32)}")
         previous_x = self.entity.x
         previous_y = self.entity.y
         sprite = self.entity.get(Sprite)

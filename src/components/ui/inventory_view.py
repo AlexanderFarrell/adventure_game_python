@@ -8,7 +8,6 @@ items_per_row = 5
 padding_size = 5
 gap_size = 5
 item_size = 32
-color = (128, 128, 128)
 
 class InventoryView:
     def __init__(self, inventory, slot_image="inventory_slot.png"):
@@ -24,7 +23,7 @@ class InventoryView:
         x = camera.width - width
         y = 0
 
-        self.window = create_window(x, y, width, height, color)
+        self.window = create_window(x, y, width, height)
         self.slot_container_sprites = []
         self.slot_sprites = []
 
@@ -37,8 +36,8 @@ class InventoryView:
         row = 0
         column = 0
         for slot in self.inventory.slots:
-            x = column * (item_size + gap_size) + self.window.x
-            y = row * (item_size + gap_size) + self.window.y
+            x = column * (item_size + gap_size) + self.window.x + padding_size
+            y = row * (item_size + gap_size) + self.window.y + padding_size
             container_sprite = Entity(Sprite(self.slot_image, True), x=x, y=y)
             self.window.get(Window).items.append(container_sprite)
             if slot.type is not None:

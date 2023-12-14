@@ -1,4 +1,4 @@
-active_objs = []
+
 
 class Entity:
     def __init__(self, *components, x=0, y=0):
@@ -29,4 +29,3 @@ class Entity:
             if isinstance(c, kind):
                 return c
         return None    
-        

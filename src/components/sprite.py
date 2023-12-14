@@ -3,27 +3,29 @@ from core.camera import camera
 
 image_path = "content/images"
 
-sprites = []
 loaded = {}
 
-def reset_sprites():
-    global sprites
-    sprites.clear()
-
 class Sprite:
-    def __init__(self, image):
+    def __init__(self, image, is_ui=False):
+        from core.engine import engine
         global sprites
+        self.is_ui = is_ui
+
         if image in loaded:
             self.image = loaded[image]
         else:
             self.image = pygame.image.load(image_path + "/" + image)
             loaded[image] = self.image
-        sprites.append(self)
+        engine.drawables.append(self)
 
-    def delete(self):
-        sprites.remove(self)
+    def breakdown(self):
+        from core.engine import engine
+        engine.drawables.remove(self)
 
     def draw(self, screen):
-        screen.blit(self.image, (self.entity.x - camera.x, self.entity.y - camera.y))
+        pos = (self.entity.x - camera.x, self.entity.y - camera.y) \
+                if not self.is_ui else \
+                (self.entity.x, self.entity.y)
+        screen.blit(self.image, pos)
 
 # Load things uniquely.

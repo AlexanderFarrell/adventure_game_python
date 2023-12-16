@@ -5,6 +5,7 @@ from components.physics import Body
 from components.teleporter import Teleporter
 from components.inventory import Inventory, DroppedItem
 from data.item_types import item_types
+from components.usable import Usable, Choppable, Minable, NPC, Enemy
 
 
 entity_factories = [
@@ -12,10 +13,10 @@ entity_factories = [
     lambda args: Entity(Player(), Sprite("player.png"), Body(8, 48, 16, 16)),
 
     # 1
-    lambda args: Entity(Sprite("tree.png"), Body(16, 96, 32, 32)),      
+    lambda args: Entity(Sprite("tree.png"), Body(16, 96, 32, 32), Choppable("Pine Tree")),      
 
     # 2
-    lambda args: Entity(Sprite("rock.png"), Body()), 
+    lambda args: Entity(Sprite("rock.png"), Body(), Minable("Rock")), 
 
     # 3
     lambda args: Entity(Teleporter(args[0], args[1], args[2]), Sprite("teleporter_up.png")),

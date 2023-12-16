@@ -18,6 +18,8 @@ class Engine:
         self.drawables = [] # Anything to be drawn in the world
         self.ui_drawables = [] # Anything to be drawn over the world
 
+        self.usables = []
+
         self.clear_color = (30, 150, 240) # Default color if nothing else is drawn somewhere
         self.screen = create_screen(default_width, default_height, game_title) # The rectangle in the window itself
         self.stages = {}
@@ -36,10 +38,10 @@ class Engine:
         func()
 
     def run(self):
-        from core.input import keys_down, mouse_buttons_down
-
+        from core.input import keys_down, mouse_buttons_down, mouse_buttons_just_pressed
         self.running = True
         while self.running:
+            mouse_buttons_just_pressed.clear()
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     self.running = False
@@ -49,6 +51,7 @@ class Engine:
                     keys_down.remove(event.key)
                 elif event.type == pygame.MOUSEBUTTONDOWN:
                     mouse_buttons_down.add(event.button)
+                    mouse_buttons_just_pressed.add(event.button)
                 elif event.type == pygame.MOUSEBUTTONUP:
                     mouse_buttons_down.remove(event.button)
 

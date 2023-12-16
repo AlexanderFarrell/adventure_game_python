@@ -28,12 +28,20 @@ class Player:
         self.loc_label.entity.x = 10
         self.area_label.entity.x = 10
 
-    # def __del__(self):
-    #     from core.engine import engine
-    #     engine.active_objs.remove(self)
-
     def setup(self):
         pass
+
+    def interact(self, mouse_pos):
+        from core.engine import engine
+        for usable in engine.usables:
+            if usable.entity.has(Sprite):
+                s = usable.entity.get(Sprite)
+                x_sprite = usable.entity.x - camera.x
+                y_sprite = usable.entity.y - camera.y
+                if x_sprite < mouse_pos[0] < x_sprite + s.image.get_width() and \
+                    y_sprite < mouse_pos[1] < y_sprite + s.image.get_height():
+                    usable.on(usable, self.entity)
+                    return
 
     def update(self):
         self.loc_label.set_text(f"X: {int(self.entity.x/32)} - Y: {int(self.entity.y/32)}")
@@ -53,6 +61,11 @@ class Player:
             from core.engine import engine
             engine.switch_to("Menu")
 
+        from core.input import is_mouse_just_pressed
+        mouse_pos = pygame.mouse.get_pos()
+        if is_mouse_just_pressed(1):
+            self.interact(mouse_pos)
+            
         if is_key_pressed(pygame.K_a):
             self.entity.x -= movement_speed
         if is_key_pressed(pygame.K_d):

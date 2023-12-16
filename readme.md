@@ -2,6 +2,8 @@
 
 This game is a tile-based 2D adventure game created with Pygame. The playlist on YouTube for each step can be found here [Pygame - Adventure Game](https://youtube.com/playlist?list=PLn8cgfOA2qzeXxXe7DBWxX1UR5fJ4MDTb&si=BAjE1NPnPxDdv5rP).
 
+![Pygame Adventure Game](https://alexander-farrell.nyc3.digitaloceanspaces.com/media/adventure_game_banner.webp)
+
 
 ## Quickstart
 

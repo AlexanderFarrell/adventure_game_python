@@ -8,6 +8,7 @@ from components.physics import Body, triggers
 from core.area import area
 from components.inventory import Inventory
 from components.ui.inventory_view import InventoryView
+from core.math_ext import distance
 
 movement_speed = 2
 inventory = Inventory(20)
@@ -40,7 +41,17 @@ class Player:
                 y_sprite = usable.entity.y - camera.y
                 if x_sprite < mouse_pos[0] < x_sprite + s.image.get_width() and \
                     y_sprite < mouse_pos[1] < y_sprite + s.image.get_height():
-                    usable.on(usable, self.entity)
+                    my_sprite = self.entity.get(Sprite)
+                    d = distance(x_sprite + s.image.get_width()/2, 
+                                 y_sprite + s.image.get_height(),
+                                 self.entity.x - camera.x + my_sprite.image.get_width()/2,
+                                 self.entity.y - camera.y + my_sprite.image.get_height())
+                    print("x_sprite", x_sprite)
+                    print("y_sprite", y_sprite)
+                    print("x", self.entity.x)
+                    print("y", self.entity.y)
+                    print("distance", d)
+                    usable.on(usable, self.entity, d)
                     return
 
     def update(self):

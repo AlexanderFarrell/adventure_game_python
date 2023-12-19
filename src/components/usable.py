@@ -1,4 +1,4 @@
-from core.math_ext import distance
+
 
 class Action:
     def __init__(self, name, on):
@@ -19,8 +19,8 @@ class Usable:
 
 class Choppable(Usable):
     @staticmethod
-    def on(subject, other):
-        if distance(subject.entity.x, subject.entity.y, other.x, other.y) < 60:
+    def on(subject, other, distance):
+        if distance < 60:
             print("Chopping " + subject.obj_name)
         else:
             print("I need to get closer")
@@ -32,8 +32,8 @@ class Choppable(Usable):
 
 class Minable(Usable):
     @staticmethod
-    def on(subject, other):
-        if distance(subject.entity.x, subject.entity.y, other.x, other.y) < 60:
+    def on(subject, other, distance):
+        if distance < 60:
             print("Mining " + subject.obj_name)
         else:
             print("I need to get closer")
@@ -45,8 +45,8 @@ class Minable(Usable):
 
 class NPC(Usable):
     @staticmethod
-    def on(subject, other):
-        if distance(subject.entity.x, subject.entity.y, other.x, other.y) < 60:
+    def on(subject, other, distance):
+        if distance < 60:
             print("Talking to " + subject.obj_name)
         else:
             print("I need to get closer")
@@ -57,8 +57,8 @@ class NPC(Usable):
 
 
 class Enemy(Usable):
-    def on(subject, other):
-        if distance(subject.entity.x, subject.entity.y, other.x, other.y) < 60:
+    def on(subject, other, distance):
+        if distance < 60:
             print("Attacking " + subject.obj_name)
         else:
             print("I need to get closer")

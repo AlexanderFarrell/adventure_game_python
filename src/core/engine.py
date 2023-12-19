@@ -91,3 +91,4 @@ class Engine:
         self.drawables.clear()
         self.ui_drawables.clear()
         self.background_drawables.clear()
+        self.usables.clear()

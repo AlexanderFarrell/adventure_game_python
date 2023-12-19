@@ -12,6 +12,7 @@ from core.math_ext import distance
 
 movement_speed = 2
 inventory = Inventory(20)
+message_time_seconds = 3
 
 class Player:
     def __init__(self):
@@ -19,15 +20,15 @@ class Player:
         engine.active_objs.append(self)
         self.loc_label = Entity(Label("EBGaramond-Regular.ttf", 
                                          "X: 0 - Y: 0")).get(Label)
-        self.area_label = Entity(Label("EBGaramond-Regular.ttf", 
+        self.message_label = Entity(Label("EBGaramond-Regular.ttf", 
                                        area.name)).get(Label)
         self.inventory_window = Entity(InventoryView(inventory))
-        
         from core.camera import camera
         self.loc_label.entity.y = camera.height - 50
 
         self.loc_label.entity.x = 10
-        self.area_label.entity.x = 10
+        self.message_label.entity.x = 10
+        self.show_message(f"Entering {area.name}")
 
     def setup(self):
         pass
@@ -36,25 +37,44 @@ class Player:
         from core.engine import engine
         for usable in engine.usables:
             if usable.entity.has(Sprite):
-                s = usable.entity.get(Sprite)
+                usable_sprite = usable.entity.get(Sprite)
+
+                # Get the x, y, width and height of the usable's sprite
                 x_sprite = usable.entity.x - camera.x
                 y_sprite = usable.entity.y - camera.y
-                if x_sprite < mouse_pos[0] < x_sprite + s.image.get_width() and \
-                    y_sprite < mouse_pos[1] < y_sprite + s.image.get_height():
+                width_sprite = usable_sprite.image.get_width()
+                height_sprite = usable_sprite.image.get_height()
+
+                # Check if the mouse is clicking this
+                if x_sprite < mouse_pos[0] < x_sprite + width_sprite and \
+                    y_sprite < mouse_pos[1] < y_sprite + height_sprite:
+
+                    # Get our sprite
                     my_sprite = self.entity.get(Sprite)
-                    d = distance(x_sprite + s.image.get_width()/2, 
-                                 y_sprite + s.image.get_height(),
+
+                    # Calculate the distance between these two sprites, from their feet
+                    d = distance(x_sprite + usable_sprite.image.get_width()/2, 
+                                 y_sprite + usable_sprite.image.get_height(),
                                  self.entity.x - camera.x + my_sprite.image.get_width()/2,
                                  self.entity.y - camera.y + my_sprite.image.get_height())
-                    print("x_sprite", x_sprite)
-                    print("y_sprite", y_sprite)
-                    print("x", self.entity.x)
-                    print("y", self.entity.y)
-                    print("distance", d)
+                    
+                    # Call the usable function
                     usable.on(usable, self.entity, d)
+
+                    # We only want to interact with the first thing we click. 
+                    # Return prevents anymore objects being interacted with on this
+                    # click
                     return
+                
+    def show_message(self, message):
+        self.message_label.set_text(message)
+        self.message_countdown = message_time_seconds * 60
 
     def update(self):
+        if self.message_countdown > 0:
+            self.message_countdown -= 1
+            if self.message_countdown <= 0:
+                self.message_label.set_text("")
         self.loc_label.set_text(f"X: {int(self.entity.x/32)} - Y: {int(self.entity.y/32)}")
         previous_x = self.entity.x
         previous_y = self.entity.y

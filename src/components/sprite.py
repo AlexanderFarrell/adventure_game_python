@@ -18,6 +18,14 @@ class Sprite:
             loaded[image] = self.image
         engine.drawables.append(self)
 
+    def set_image(self, image):
+        if image in loaded:
+            self.image = loaded[image]
+        else:
+            self.image = pygame.image.load(image_path + "/" + image)
+            loaded[image] = self.image
+
+
     def breakdown(self):
         from core.engine import engine
         engine.drawables.remove(self)

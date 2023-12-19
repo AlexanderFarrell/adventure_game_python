@@ -13,7 +13,9 @@ entity_factories = [
     lambda args: Entity(Player(), Sprite("player.png"), Body(8, 48, 16, 16)),
 
     # 1
-    lambda args: Entity(Sprite("tree.png"), Body(16, 96, 32, 32), Choppable("Pine Tree")),      
+    lambda args: Entity(Sprite("tree.png"), 
+                        Body(16, 96, 32, 32), 
+                        Choppable("Pine Tree", "tree_stump.png")),      
 
     # 2
     lambda args: Entity(Sprite("rock.png"), Body(), Minable("Rock")), 

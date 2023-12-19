@@ -4,13 +4,16 @@ from components.physics import Trigger
 image_path = "content/images"
 
 class ItemType:
-    def __init__(self, name, icon, stack_size=1):
+    def __init__(self, name, icon, stack_size=1, **kwargs):
         self.name = name
         self.icon_name = icon
         self.icon = pygame.image.load(image_path + "/" + icon)
         self.value = 0
         self.weight = 0
         self.stack_size = stack_size
+        self.stats = dict()
+        for key in kwargs:
+            self.stats[key] = kwargs[key]
 
 class ItemSlot:
     def __init__(self):
@@ -30,6 +33,17 @@ class Inventory:
     def notify(self):
         if self.listener is not None:
             self.listener.refresh()
+
+    def get_best(self, stat):
+        best = {"power": 0, "item": None}
+        for s in self.slots:
+            if s.type is not None and stat in s.type.stats:
+                p = int(s.type.stats[stat])
+                if p > best["power"]:
+                    best["power"] = p
+                    best["item"] = s.type
+        return best
+
 
     def add(self, item_type, amount=1):
         # First sweep for any open stacks

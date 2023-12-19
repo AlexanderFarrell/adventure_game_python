@@ -59,7 +59,7 @@ class Player:
                                  self.entity.y - camera.y + my_sprite.image.get_height())
                     
                     # Call the usable function
-                    usable.on(usable, self.entity, d)
+                    usable.on(self.entity, d)
 
                     # We only want to interact with the first thing we click. 
                     # Return prevents anymore objects being interacted with on this

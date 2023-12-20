@@ -14,7 +14,7 @@ This game is a tile-based 2D adventure game created with Pygame. The playlist on
 
 ## Navigation
 
-| Item    | Description |
-|---------|-------------|
-| src     | Source code folder |
-| content | Images, data, audio, etc |
+|         Item         |  Description  |
+|----------------------|---------------|
+| [content](./content) | Asset files (images, map data, etc.) is here |
+| [src](./src)         | Python code for the game is here. |

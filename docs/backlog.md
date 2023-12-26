@@ -24,6 +24,10 @@
     - Windows
     - Mac
     - Linux
+- Combat
+    - Melee
+    - Range
+    - Magic - Fire, Frost, 
 
 # Completed
 

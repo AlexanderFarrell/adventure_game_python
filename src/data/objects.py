@@ -40,7 +40,7 @@ entity_factories = [
     lambda args: Entity(Sprite(args[1]), NPC(args[0], args[2])),
 
     # 9 - Dropped Item which respawns
-    lambda args: Entity(DroppedItem(item_types[int(args[0])], int(args[1]), pick_up_once=True), Sprite(item_types[int(args[0])].icon_name)),
+    lambda args: Entity(DroppedItem(item_types[int(args[0])], int(args[1]), pick_up_once=False), Sprite(item_types[int(args[0])].icon_name)),
 ]
 
 def create_entity(id, x, y, data=None, index=None):

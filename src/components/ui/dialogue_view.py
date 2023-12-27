@@ -4,6 +4,7 @@ from math import ceil
 from components.entity import Entity
 from components.sprite import Sprite
 from components.ui.window import Window
+from components.button import Button
 from components.label import Label
 from core.input import is_key_just_pressed
 
@@ -128,8 +129,26 @@ class DialogueView:
             self.current_line = result-2
             self.next_line()
         elif arguments[0] == "choice":
+            self.speaker_label.set_text("")
+            self.content_label.set_text("")
             choice_lines = arguments[1:]
-            
+            i = 0
+            buttons = []
+            # option_line = self.current_line
+            for _ in choice_lines:
+                print(i)
+                ii = i
+                words = self.lines[self.current_line + i + 1].split(' ')
+                text = " ".join(words[1:])
+                def on_click_choice():
+                    print(ii)
+                x = 50
+                y = 20+40*(i)
+                buttons.append(Entity(Label("EBGaramond-ExtraBold.ttf", text, size=25),
+                                      Button(on_click_choice, pygame.Rect(-50, 0, dialogue_box_width, 40)),
+                                x=x+self.window.entity.x,
+                                y=y+self.window.entity.y))
+                i += 1
 
     def update(self):
         if is_key_just_pressed(pygame.K_SPACE) or is_key_just_pressed(pygame.K_RETURN):

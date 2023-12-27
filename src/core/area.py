@@ -7,8 +7,12 @@ class Area:
     def __init__(self, area_file, tile_types):
         global area
         area = self
+        self.area_file = area_file
         self.tile_types = tile_types
         self.load_file(area_file)
+        from core.engine import engine
+        if not area_file in engine.persistent_removed:
+            engine.persistent_removed[area_file] = dict()
 
     def search_for_first(self, kind):
         for e in self.entities:
@@ -47,15 +51,23 @@ class Area:
         # Load the entities
         self.entities = []
         entity_lines = entity_data.split('\n')[1:]
-        for line in entity_lines:
+        for index, line in enumerate(entity_lines):
             try:
                 items = line.split(',')
                 id = int(items[0])
                 x = int(items[1])
                 y = int(items[2])
-                self.entities.append(create_entity(id, x, y, items[3:]))
+                self.entities.append(create_entity(id, x, y, items[3:], index=index))
             except Exception as e:
                 print(f"Error parsing line: {line}. {e}")
+        
+        # Remove any entites in persistent
+        from core.engine import engine
+        l = engine[area_file].sorted().reverse()
+        for index in l:
+            self.remove_entity(self.entities[index])
+        
+        
 
 
 

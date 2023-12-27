@@ -126,7 +126,7 @@ class Inventory:
         return value
 
 
-def pick_up(item, other):
+def pick_up(item, other, pick_up_once):
     from components.player import Player, inventory
     if other.has(Player):
         # inventory = other.get(Inventory)
@@ -135,11 +135,15 @@ def pick_up(item, other):
         if item.quantity <= 0:
             from core.area import area
             area.remove_entity(item.entity)
+            if pick_up_once:
+                from core.engine import engine
+                engine.persistent_removed[area.area_file].append(item.entity.index)
         # print(inventory)
             
 
 class DroppedItem(Trigger):
-    def __init__(self, item_type, quantity):
+    def __init__(self, item_type, quantity, pick_up_once=False):
         self.item_type = item_type
         self.quantity = quantity
-        super().__init__(lambda other: pick_up(self, other), 0, 0, 32, 32)
+        self.pick_up_once = pick_up_once
+        super().__init__(lambda other: pick_up(self, other, pick_up_once), 0, 0, 32, 32)

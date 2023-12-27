@@ -40,9 +40,10 @@ entity_factories = [
     lambda args: Entity(Sprite(args[1]), NPC(args[0], args[2]))
 ]
 
-def create_entity(id, x, y, data=None):
+def create_entity(id, x, y, data=None, index=None):
     factory = entity_factories[id]
     e =  factory(data)
+    e.index = index
     e.x = x*32
     e.y = y*32
     return e

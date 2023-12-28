@@ -19,8 +19,8 @@
 11111111101221111111111111
 11111111111122111111111111
 -
-8,5,1,Albert,player.png,albert.npc
-8,9,1,Burt,player.png,nigel.npc
+8,5,2,Albert,npc_male1.png,albert.npc
+8,9,2,Sally,npc_female2.png,sally.npc
 0,11,7
 3,11,0,volcano.map,16,23
 4,25,8,forest_center.map,1,12

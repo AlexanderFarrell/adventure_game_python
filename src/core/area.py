@@ -67,6 +67,7 @@ class Area:
             self.remove_entity(self.entities[index])
         
         
-
+# 2 5 13 1
+            # 1 2 5 13
 
 

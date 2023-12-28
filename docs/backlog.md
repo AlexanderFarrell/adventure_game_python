@@ -29,6 +29,10 @@
     - Range
     - Magic - Fire, Frost, 
 
+# Issue List
+
+Items respawn after leaving an area
+
 # Completed
 
 - Camera

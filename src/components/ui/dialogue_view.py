@@ -103,52 +103,36 @@ class DialogueView:
         self.content_label.set_text(line[1:])
 
     def command(self, line):
-        arguments = line[2:].split(' ')
-        if arguments[0] == "give":
+        words = line.split(" ")
+        command = words[1]
+        arguments = words[2:]
+        if command == "give":
             from components.player import inventory
             from data.item_types import item_types
-            t = item_types[int(arguments[1])]
-            amount = int(arguments[2])
+            t = item_types[int(arguments[0])]
+            amount = int(arguments[1])
             excess = inventory.add(t, amount)
-            if excess > 0:
+            amount_added = amount - excess
+            if amount_added == 0:
                 self.speaker_label.set_text("")
                 self.content_label.set_text(f"Your inventory is full")
             else:
                 self.speaker_label.set_text("")
-                self.content_label.set_text(f"You receive {amount - excess} {t.name}")
-        elif arguments[0] == "goto":
-            self.current_line = int(arguments[1])-2
+                self.content_label.set_text(f"You receive {amount_added} {t.name}")
+        elif command == "goto":
+            self.current_line = int(arguments[0])-2
             print(self.current_line)
             self.next_line()
-        elif arguments[0] == "end":
+        elif command == "end":
             self.breakdown()
-        elif arguments[0] == "random":
+        elif command == "random":
             import random
-            next_lines = [int(x) for x in arguments[1:]]
+            next_lines = [int(x) for x in arguments]
             result = random.choice(next_lines)
             self.current_line = result-2
             self.next_line()
-        elif arguments[0] == "choice":
-            self.speaker_label.set_text("")
-            self.content_label.set_text("")
-            choice_lines = arguments[1:]
-            i = 0
-            buttons = []
-            # option_line = self.current_line
-            for _ in choice_lines:
-                print(i)
-                ii = i
-                words = self.lines[self.current_line + i + 1].split(' ')
-                text = " ".join(words[1:])
-                def on_click_choice():
-                    print(ii)
-                x = 50
-                y = 20+40*(i)
-                buttons.append(Entity(Label("EBGaramond-ExtraBold.ttf", text, size=25),
-                                      Button(on_click_choice, pygame.Rect(-50, 0, dialogue_box_width, 40)),
-                                x=x+self.window.entity.x,
-                                y=y+self.window.entity.y))
-                i += 1
+        else:
+            print(f"Unknown command {command}")
 
     def update(self):
         if is_key_just_pressed(pygame.K_SPACE) or is_key_just_pressed(pygame.K_RETURN):

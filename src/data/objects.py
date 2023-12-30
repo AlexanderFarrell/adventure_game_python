@@ -34,15 +34,11 @@ entity_factories = [
     lambda args: Entity(Teleporter(args[0], args[1], args[2]), Sprite("teleporter_left.png")),
 
     # 7 - Dropped Item which can only be picked up once
-    lambda args: Entity(DroppedItem(item_types[int(args[0])], int(args[1]), pick_up_once=True), 
+    lambda args: Entity(DroppedItem(item_types[int(args[0])], int(args[1])), 
                         Sprite(item_types[int(args[0])].icon_name)),
 
     # 8 - NPC
     lambda args: Entity(Sprite(args[1]), NPC(args[0], args[2])),
-
-    # 9 - Dropped Item which respawns
-    lambda args: Entity(DroppedItem(item_types[int(args[0])], int(args[1]), pick_up_once=False), 
-                        Sprite(item_types[int(args[0])].icon_name)),
 ]
 
 def create_entity(id, x, y, data=None, index=None):

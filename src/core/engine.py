@@ -20,8 +20,6 @@ class Engine:
 
         self.usables = []
 
-        self.persistent_removed = dict()
-
         self.clear_color = (30, 150, 240) # Default color if nothing else is drawn somewhere
         self.screen = create_screen(default_width, default_height, game_title) # The rectangle in the window itself
         self.stages = {}

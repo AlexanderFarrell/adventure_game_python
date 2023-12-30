@@ -80,6 +80,9 @@ class DialogueView:
             self.breakdown()
             return
         line = self.lines[self.current_line]
+        if len(line) == 0:
+            self.next_line()
+            return
         if line[0] == '-':
             self.player_speak(line)
         elif line[0] == '!':

@@ -26,9 +26,6 @@ class Area:
     def load_file(self, area_file):
         from data.objects import create_entity
         from core.engine import engine
-        self.area_file = area_file
-        if not area_file in engine.persistent_removed:
-            engine.persistent_removed[area_file] = []
         
         engine.reset()
 
@@ -50,21 +47,15 @@ class Area:
         # Load the entities
         self.entities = []
         entity_lines = entity_data.split('\n')[1:]
-        for index, line in enumerate(entity_lines):
+        for line in entity_lines:
             try:
                 items = line.split(',')
                 id = int(items[0])
                 x = int(items[1])
                 y = int(items[2])
-                self.entities.append(create_entity(id, x, y, items[3:], index=index))
+                self.entities.append(create_entity(id, x, y, items[3:]))
             except Exception as e:
                 print(f"Error parsing line: {line}. {e}")
-        
-        # Remove any entites in persistent
-        l = sorted(engine.persistent_removed[area_file])
-        l.reverse()
-        for index in l:
-            self.remove_entity(self.entities[index])
         
         
 # 2 5 13 1

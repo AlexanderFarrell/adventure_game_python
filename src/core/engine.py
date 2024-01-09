@@ -20,6 +20,8 @@ class Engine:
 
         self.usables = []
 
+        self.effects = []
+
         self.clear_color = (30, 150, 240) # Default color if nothing else is drawn somewhere
         self.screen = create_screen(default_width, default_height, game_title) # The rectangle in the window itself
         self.stages = {}
@@ -69,6 +71,10 @@ class Engine:
             for b in self.background_drawables:
                 b.draw(self.screen)
 
+            # Draw Effects
+            from core.effect import effects
+            for e in effects:
+                e.draw(self.screen)
 
             # Draw the main objects
             for s in self.drawables:
@@ -95,3 +101,6 @@ class Engine:
         self.ui_drawables.clear()
         self.background_drawables.clear()
         self.usables.clear()
+        self.effects.clear()
+        from core.effect import effects
+        effects.clear()

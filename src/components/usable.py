@@ -26,12 +26,18 @@ class Choppable(Usable):
         self.is_chopped = False
 
     def on(self, other, distance):
-        from components.player import Player
+        from components.player import Player, inventory
         from components.sprite import Sprite
         player = other.get(Player)
         if self.is_chopped:
             player.show_message("This tree is already chopped")
             return
+        chop_best = inventory.get_best("chop_power")
+        if chop_best["power"] <= 0:
+            player.show_message("You need an axe to chop this " + self.obj_name)
+            return
+        from core.effect import Effect
+        Effect(other.x, other.y, 0, 1, 10, chop_best["item"].icon)
         if distance < 60:
             player.show_message("Chopping " + self.obj_name)
             self.entity.get(Sprite).set_image(self.chopped_image)
@@ -45,8 +51,14 @@ class Minable(Usable):
         super().__init__(obj_name)
 
     def on(self, other, distance):
-        from components.player import Player
+        from components.player import Player, inventory
         player = other.get(Player)
+        mine_best = inventory.get_best("mine_power")
+        if mine_best["power"] <= 0:
+            player.show_message("You need a pickaxe to mine this " + self.obj_name)
+            return
+        from core.effect import Effect
+        Effect(other.x, other.y, 0, 1, 10, mine_best["item"].icon)
         if distance < 60:
             player.show_message("Mining " + self.obj_name)
             from core.area import area

@@ -10,6 +10,7 @@ class Engine:
         from core.camera import create_screen
         global engine
         engine = self
+        self.step = 0
 
         self.active_objs = [] # Anything with an update() method which can be called
 
@@ -46,6 +47,7 @@ class Engine:
         while self.running:
             mouse_buttons_just_pressed.clear()
             keys_just_pressed.clear()
+            self.step += 1
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     self.running = False

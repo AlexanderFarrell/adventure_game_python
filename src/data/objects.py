@@ -5,13 +5,14 @@ from components.physics import Body
 from components.teleporter import Teleporter
 from components.inventory import Inventory, DroppedItem
 from data.item_types import item_types
-from components.usable import Usable, Choppable, Minable, Enemy
+from components.usable import Usable, Choppable, Minable
+from components.enemy import Enemy
 from components.npc import NPC
 
 
 entity_factories = [
     # 0 - Player
-    lambda args: Entity(Player(), Sprite("player.png"), Body(8, 48, 16, 16)),
+    lambda args: Entity(Player(100), Sprite("player.png"), Body(8, 48, 16, 16)),
 
     # 1 - Pine Tree
     lambda args: Entity(Sprite("tree.png"), 
@@ -39,6 +40,9 @@ entity_factories = [
 
     # 8 - NPC
     lambda args: Entity(Sprite(args[1]), NPC(args[0], args[2])),
+    
+    # 9 - Enemy
+    lambda args: Entity(Sprite(args[0]), Enemy(100), Body(8, 48, 16, 16))
 ]
 
 def create_entity(id, x, y, data=None, index=None):

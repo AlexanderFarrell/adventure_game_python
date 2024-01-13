@@ -67,14 +67,14 @@ class Minable(Usable):
             player.show_message("I need to get closer")
 
 
-class Enemy(Usable):
-    def __init__(self, obj_name):
-        super().__init__(obj_name)
+# class Enemy(Usable):
+#     def __init__(self, obj_name):
+#         super().__init__(obj_name)
 
-    def on(self, other, distance):
-        from components.player import Player
-        player = other.get(Player)
-        if distance < 60:
-            player.show_message("Attacking " + self.obj_name)
-        else:
-            player.show_message("I need to get closer")
+#     def on(self, other, distance):
+#         from components.player import Player
+#         player = other.get(Player)
+#         if distance < 60:
+#             player.show_message("Attacking " + self.obj_name)
+#         else:
+#             player.show_message("I need to get closer")

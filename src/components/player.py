@@ -14,8 +14,11 @@ movement_speed = 2
 inventory = Inventory(20)
 message_time_seconds = 3
 
+def on_player_death(entity):
+    print("Player died")
+
 class Player:
-    def __init__(self):
+    def __init__(self, health):
         from core.engine import engine
         engine.active_objs.append(self)
         self.loc_label = Entity(Label("EBGaramond-Regular.ttf", 
@@ -30,8 +33,15 @@ class Player:
         self.message_label.entity.x = 10
         self.show_message(f"Entering {area.name}")
 
+        self.health = health
+
     def setup(self):
-        pass
+        from components.combat import Combat
+        combat = Combat(self.health, on_player_death)
+        self.entity.add(combat)
+        self.combat = combat
+        del self.health
+        print("Setup called")
 
     def interact(self, mouse_pos):
         from core.engine import engine
@@ -95,7 +105,12 @@ class Player:
         from core.input import is_mouse_just_pressed
         mouse_pos = pygame.mouse.get_pos()
         if is_mouse_just_pressed(1):
-            self.interact(mouse_pos)
+            self.combat.equipped = None if inventory.equipped_slot == None \
+                                        else inventory.slots[inventory.equipped_slot].type
+            if self.combat.equipped is None:
+                self.interact(mouse_pos)
+            else:
+                self.combat.perform_attack()
             
         if is_key_pressed(pygame.K_a):
             self.entity.x -= movement_speed

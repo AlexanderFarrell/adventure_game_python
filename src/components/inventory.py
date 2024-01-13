@@ -23,6 +23,7 @@ class ItemSlot:
 class Inventory:
     def __init__(self, capacity):
         self.capacity = capacity
+        self.equipped_slot = None
         self.taken_slots = 0
         self.slots = []
         for _ in range(self.capacity):

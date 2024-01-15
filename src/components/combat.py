@@ -30,8 +30,9 @@ class Combat:
         self.global_cooldown = self.equipped.stats['cooldown']*60
         print(self.global_cooldown)
 
-        from core.effect import create_hit_text
+        from core.effect import create_hit_text, Effect
         create_hit_text(other.entity.x, other.entity.y, str(damage), (255, 0, 0))
+        Effect(self.entity.x, self.entity.y, 0, 5, 5, self.equipped.icon)
 
         print(f"Took {damage} damage. Has {other.health}")
         if other.health <= 0:

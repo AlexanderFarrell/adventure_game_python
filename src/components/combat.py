@@ -5,6 +5,7 @@ class Combat:
         self.max_health = health
         self.global_cooldown = 0
         self.equipped = None
+        self.regen = 0.01
         self.on_death = on_death
         from core.engine import engine
         engine.active_objs.append(self)
@@ -56,5 +57,9 @@ class Combat:
     def update(self):
         if self.global_cooldown > 0:
             self.global_cooldown -= 1
+        if self.health < self.max_health:
+            self.health += self.regen
+        if self.health > self.max_health:
+            self.health = self.max_health
         
 

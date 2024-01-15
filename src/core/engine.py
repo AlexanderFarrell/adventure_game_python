@@ -73,14 +73,14 @@ class Engine:
             for b in self.background_drawables:
                 b.draw(self.screen)
 
+            # Draw the main objects
+            for s in self.drawables:
+                s.draw(self.screen)
+
             # Draw Effects
             from core.effect import effects
             for e in effects:
                 e.draw(self.screen)
-
-            # Draw the main objects
-            for s in self.drawables:
-                s.draw(self.screen)
 
             # Draw UI Stuff
             for l in self.ui_drawables:

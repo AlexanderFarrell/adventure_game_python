@@ -42,7 +42,7 @@ entity_factories = [
     lambda args: Entity(Sprite(args[1]), NPC(args[0], args[2])),
     
     # 9 - Enemy
-    lambda args: Entity(Sprite(args[0]), Enemy(100), Body(8, 48, 16, 16))
+    lambda args: Entity(Sprite(args[0]), Enemy(100, 3), Body(8, 48, 16, 16))
 ]
 
 def create_entity(id, x, y, data=None, index=None):

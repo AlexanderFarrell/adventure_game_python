@@ -2,9 +2,16 @@
 class Combat:
     def __init__(self, health, on_death):
         self.health = health
+        self.max_health = health
         self.global_cooldown = 0
         self.equipped = None
         self.on_death = on_death
+        from core.engine import engine
+        engine.active_objs.append(self)
+
+    def breakdown(self):
+        from core.engine import engine
+        engine.active_objs.remove(self)
 
     def attack(self, other):
         if self.equipped == None:
@@ -13,9 +20,19 @@ class Combat:
             # put it here!
             return
         
-        other.health -= int(self.equipped.stats['damage'])
-        self.global_cooldown = self.equipped.stats['cooldown']
-        print(f"Took {self.equipped.stats['damage']} damage. Has {other.health}")
+        # If we are still on cooldown
+        if self.global_cooldown > 0:
+            return
+        
+        damage = int(self.equipped.stats['damage'])
+        other.health -= damage
+        self.global_cooldown = self.equipped.stats['cooldown']*60
+        print(self.global_cooldown)
+
+        from core.effect import create_hit_text
+        create_hit_text(other.entity.x, other.entity.y, str(damage), (255, 0, 0))
+
+        print(f"Took {damage} damage. Has {other.health}")
         if other.health <= 0:
             other.on_death(other.entity)
 

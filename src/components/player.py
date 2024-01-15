@@ -9,6 +9,7 @@ from core.area import area
 from components.inventory import Inventory
 from components.ui.inventory_view import InventoryView
 from core.math_ext import distance
+from components.ui.bar import Bar
 
 movement_speed = 2
 inventory = Inventory(20)
@@ -41,6 +42,14 @@ class Player:
         self.entity.add(combat)
         self.combat = combat
         del self.health
+
+        self.health_bar = Entity(Bar(self.combat.max_health, 
+                              (255, 0, 0), 
+                              (0, 255, 0))).get(Bar); 
+        
+        self.health_bar.entity.x = camera.width - self.health_bar.width
+        self.health_bar.entity.y = camera.height - self.health_bar.height
+        
         print("Setup called")
 
     def interact(self, mouse_pos):
@@ -90,6 +99,7 @@ class Player:
         previous_y = self.entity.y
         sprite = self.entity.get(Sprite)
         body = self.entity.get(Body)
+        self.health_bar.amount = self.combat.health
 
         if is_key_pressed(pygame.K_w):
             self.entity.y -= movement_speed

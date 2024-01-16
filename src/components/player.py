@@ -32,6 +32,7 @@ class Player:
 
         self.loc_label.entity.x = 10
         self.message_label.entity.x = 10
+        self.equipped_sprite = None
         self.show_message(f"Entering {area.name}")
 
         self.health = health
@@ -51,6 +52,14 @@ class Player:
         self.health_bar.entity.y = camera.height - self.health_bar.height
         
         print("Setup called")
+
+    def equip_hand(self, item):
+        self.unequip_hand()
+        self.equipped_sprite = Entity(Sprite(item.icon_name), self.entity.x, self.entity.y).get(Sprite)
+
+    def unequip_hand(self):
+        if self.equipped_sprite is not None:
+            self.equipped_sprite.delete_self()
 
     def interact(self, mouse_pos):
         from core.engine import engine
@@ -130,6 +139,10 @@ class Player:
             self.entity.x = previous_x
         camera.x = self.entity.x - camera.width/2 + sprite.image.get_width()/2
         camera.y = self.entity.y - camera.height/2 + sprite.image.get_height()/2
+
+        if self.equipped_sprite is not None:
+            self.equipped_sprite.entity.x = self.entity.x
+            self.equipped_sprite.entity.y = self.entity.y + 16
 
         for t in triggers:
             if body.is_colliding_with(t):

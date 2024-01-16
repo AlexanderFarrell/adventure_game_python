@@ -25,6 +25,11 @@ class Sprite:
             self.image = pygame.image.load(image_path + "/" + image)
             loaded[image] = self.image
 
+    def rotate(self, amo):
+        self.image = pygame.transform.rotate(self.image, amo)
+
+    def scale(self, x_scale, y_scale):
+        self.image = pygame.transform.scale(self.image, (x_scale, y_scale))
 
     def breakdown(self):
         from core.engine import engine

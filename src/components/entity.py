@@ -12,6 +12,10 @@ class Entity:
             if callable(g):
                 c.setup()
 
+    def delete_self(self):
+        from core.area import area
+        area.remove_entity(self)
+
     def add(self, component, perform_setup=True):
         component.entity = self
         self.components.append(component)

@@ -22,6 +22,7 @@ class Area:
             g = getattr(c, "breakdown", None)
             if callable(g):
                 c.breakdown()
+        e.components.clear()
 
     def load_file(self, area_file):
         from data.objects import create_entity

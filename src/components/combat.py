@@ -7,12 +7,30 @@ class Combat:
         self.equipped = None
         self.regen = 0.01
         self.on_death = on_death
+        self.weapon_sprite = None
         from core.engine import engine
         engine.active_objs.append(self)
+
+    def equip(self, item):
+        from components.entity import Entity
+        from components.sprite import Sprite
+        self.equipped = item
+        print("equipping", self.equipped)
+        self.weapon_sprite = Entity(Sprite(self.equipped.icon_name)).get(Sprite)
+
+    def unequip(self):
+        print("calling unequip")
+        self.equipped = None    
+        self.weapon_sprite.entity.delete_self()
+        self.weapon_sprite = None
+        print("Weapon sprite", self.weapon_sprite)
+            
 
     def breakdown(self):
         from core.engine import engine
         engine.active_objs.remove(self)
+        self.weapon_sprite.entity.delete_self()
+        self.weapon_sprite = None
 
     def attack(self, other):
         if self.equipped == None:
@@ -62,5 +80,9 @@ class Combat:
             self.health += self.regen
         if self.health > self.max_health:
             self.health = self.max_health
+            
+        if self.weapon_sprite is not None:
+            self.weapon_sprite.entity.x = self.entity.x
+            self.weapon_sprite.entity.y = self.entity.y + 16
         
 

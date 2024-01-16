@@ -24,16 +24,12 @@ class Enemy:
         from components.combat import Combat
         self.entity.add(Combat(self.health, on_enemy_death))
         self.combat = self.entity.get(Combat)
-        self.combat.equipped = self.weapon
+        self.combat.equip(self.weapon)
         del self.health
 
-        # Weapon sprite
-        from components.entity import Entity
-        from components.sprite import Sprite
-        self.weapon_sprite = Entity(Sprite(self.combat.equipped.icon_name)).get(Sprite)
-
     def breakdown(self):
-        self.weapon_sprite.delete_self()
+        from core.engine import engine
+        engine.active_objs.remove(self)
 
     def update_ai(self):
         from components.physics import get_bodies_within_circle
@@ -65,10 +61,6 @@ class Enemy:
             if weapon_range > dist:
                 from components.combat import Combat
                 self.combat.attack(self.targeted_entity.get(Combat))
-
-        if self.weapon_sprite is not None:
-            self.weapon_sprite.entity.x = self.entity.x
-            self.weapon_sprite.entity.y = self.entity.y + 16
             
         if self.target is not None:
             body = self.entity.get(Body)

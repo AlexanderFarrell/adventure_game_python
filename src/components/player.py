@@ -16,7 +16,8 @@ inventory = Inventory(20)
 message_time_seconds = 3
 
 def on_player_death(entity):
-    print("Player died")
+    from core.engine import engine
+    engine.switch_to('Play')
 
 class Player:
     def __init__(self, health):
@@ -32,7 +33,6 @@ class Player:
 
         self.loc_label.entity.x = 10
         self.message_label.entity.x = 10
-        self.equipped_sprite = None
         self.show_message(f"Entering {area.name}")
 
         self.health = health
@@ -52,14 +52,6 @@ class Player:
         self.health_bar.entity.y = camera.height - self.health_bar.height
         
         print("Setup called")
-
-    def equip_hand(self, item):
-        self.unequip_hand()
-        self.equipped_sprite = Entity(Sprite(item.icon_name), self.entity.x, self.entity.y).get(Sprite)
-
-    def unequip_hand(self):
-        if self.equipped_sprite is not None:
-            self.equipped_sprite.delete_self()
 
     def interact(self, mouse_pos):
         from core.engine import engine
@@ -123,9 +115,16 @@ class Player:
 
         from core.input import is_mouse_just_pressed
         mouse_pos = pygame.mouse.get_pos()
+
+        if self.combat.equipped is None and inventory.equipped_slot is not None:
+            print("Equipping")
+            self.combat.equip(inventory.slots[inventory.equipped_slot].type)
+
+        if self.combat.equipped is not None and inventory.equipped_slot is None:
+            print("Unequipping", self.combat.equipped, inventory.equipped_slot)
+            self.combat.unequip()
+
         if is_mouse_just_pressed(1):
-            self.combat.equipped = None if inventory.equipped_slot == None \
-                                        else inventory.slots[inventory.equipped_slot].type
             if self.combat.equipped is None:
                 self.interact(mouse_pos)
             else:
@@ -139,10 +138,6 @@ class Player:
             self.entity.x = previous_x
         camera.x = self.entity.x - camera.width/2 + sprite.image.get_width()/2
         camera.y = self.entity.y - camera.height/2 + sprite.image.get_height()/2
-
-        if self.equipped_sprite is not None:
-            self.equipped_sprite.entity.x = self.entity.x
-            self.equipped_sprite.entity.y = self.entity.y + 16
 
         for t in triggers:
             if body.is_colliding_with(t):

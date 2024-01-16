@@ -14,7 +14,14 @@ class Entity:
 
     def delete_self(self):
         from core.area import area
-        area.remove_entity(self)
+        if self in area.entities:
+            area.entities.remove(self)
+        for c in self.components:
+            g = getattr(c, "breakdown", None)
+            if callable(g):
+                c.breakdown()
+        self.components.clear()
+        print("called delete self")
 
     def add(self, component, perform_setup=True):
         component.entity = self

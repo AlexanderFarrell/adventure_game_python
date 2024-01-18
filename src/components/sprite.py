@@ -18,6 +18,19 @@ class Sprite:
             loaded[image] = self.image
         engine.drawables.append(self)
 
+    def set_image(self, image):
+        if image in loaded:
+            self.image = loaded[image]
+        else:
+            self.image = pygame.image.load(image_path + "/" + image)
+            loaded[image] = self.image
+
+    def rotate(self, amo):
+        self.image = pygame.transform.rotate(self.image, amo)
+
+    def scale(self, x_scale, y_scale):
+        self.image = pygame.transform.scale(self.image, (x_scale, y_scale))
+
     def breakdown(self):
         from core.engine import engine
         engine.drawables.remove(self)

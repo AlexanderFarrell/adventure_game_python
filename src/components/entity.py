@@ -6,11 +6,30 @@ class Entity:
         self.x = x
         self.y = y
         for c in components:
-            self.add(c)
+            self.add(c, False)
+        for c in components:
+            g = getattr(c, "setup", None)
+            if callable(g):
+                c.setup()
 
-    def add(self, component):
+    def delete_self(self):
+        from core.area import area
+        if self in area.entities:
+            area.entities.remove(self)
+        for c in self.components:
+            g = getattr(c, "breakdown", None)
+            if callable(g):
+                c.breakdown()
+        self.components.clear()
+        print("called delete self")
+
+    def add(self, component, perform_setup=True):
         component.entity = self
         self.components.append(component)
+        if perform_setup:
+            g = getattr(component, "setup", None)
+            if callable(g):
+                component.setup()
 
     def remove(self, kind):
         c = self.get(kind)

@@ -1,0 +1,19 @@
+How can I help you?
+! choice 7 
+1 Can I buy something?
+2 Where am I?
+3 Who are you?
+
+-Can I buy something?
+Store is currently closed
+! goto 2
+
+-Where am I?
+You are in the forest.
+-Oh I see.
+! goto 2
+
+-Who are you?
+My name is Nigel
+Pleased to meet you
+! goto 2

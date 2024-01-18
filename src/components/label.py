@@ -10,10 +10,12 @@ class Label:
         from core.engine import engine
         global labels
         self.color = color
-        if font in fonts:
-            self.font = fonts[font]
+        name = font+str(size)
+        if name in fonts:
+            self.font = fonts[name]
         else:
             self.font = pygame.font.Font(font_folder_path + "/" + font, size)
+            fonts[name] = self.font
 
         self.set_text(text)
         engine.ui_drawables.append(self)

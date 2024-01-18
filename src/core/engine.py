@@ -10,6 +10,7 @@ class Engine:
         from core.camera import create_screen
         global engine
         engine = self
+        self.step = 0
 
         self.active_objs = [] # Anything with an update() method which can be called
 
@@ -17,6 +18,10 @@ class Engine:
         self.background_drawables = []
         self.drawables = [] # Anything to be drawn in the world
         self.ui_drawables = [] # Anything to be drawn over the world
+
+        self.usables = []
+
+        self.effects = []
 
         self.clear_color = (30, 150, 240) # Default color if nothing else is drawn somewhere
         self.screen = create_screen(default_width, default_height, game_title) # The rectangle in the window itself
@@ -36,19 +41,24 @@ class Engine:
         func()
 
     def run(self):
-        from core.input import keys_down, mouse_buttons_down
-
+        from core.input import keys_down, mouse_buttons_down, \
+                mouse_buttons_just_pressed, keys_just_pressed
         self.running = True
         while self.running:
+            mouse_buttons_just_pressed.clear()
+            keys_just_pressed.clear()
+            self.step += 1
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     self.running = False
                 elif event.type == pygame.KEYDOWN:
                     keys_down.add(event.key)
+                    keys_just_pressed.add(event.key)
                 elif event.type == pygame.KEYUP:
                     keys_down.remove(event.key)
                 elif event.type == pygame.MOUSEBUTTONDOWN:
                     mouse_buttons_down.add(event.button)
+                    mouse_buttons_just_pressed.add(event.button)
                 elif event.type == pygame.MOUSEBUTTONUP:
                     mouse_buttons_down.remove(event.button)
 
@@ -63,10 +73,14 @@ class Engine:
             for b in self.background_drawables:
                 b.draw(self.screen)
 
-
             # Draw the main objects
             for s in self.drawables:
                 s.draw(self.screen)
+
+            # Draw Effects
+            from core.effect import effects
+            for e in effects:
+                e.draw(self.screen)
 
             # Draw UI Stuff
             for l in self.ui_drawables:
@@ -88,3 +102,7 @@ class Engine:
         self.drawables.clear()
         self.ui_drawables.clear()
         self.background_drawables.clear()
+        self.usables.clear()
+        self.effects.clear()
+        from core.effect import effects
+        effects.clear()

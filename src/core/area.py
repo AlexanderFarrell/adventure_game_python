@@ -22,6 +22,7 @@ class Area:
             g = getattr(c, "breakdown", None)
             if callable(g):
                 c.breakdown()
+        e.components.clear()
 
     def load_file(self, area_file):
         from data.objects import create_entity
@@ -56,6 +57,9 @@ class Area:
                 self.entities.append(create_entity(id, x, y, items[3:]))
             except Exception as e:
                 print(f"Error parsing line: {line}. {e}")
-
+        
+        
+# 2 5 13 1
+            # 1 2 5 13
 
 

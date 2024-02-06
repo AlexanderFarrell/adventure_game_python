@@ -1,7 +1,9 @@
 import pygame
 from components.physics import Trigger
+from core.sound import Sound
 
 image_path = "content/images"
+pick_up_sound = Sound('pick_up.mp3')
 
 class ItemType:
     def __init__(self, name, icon, stack_size=1, **kwargs):
@@ -147,6 +149,7 @@ def pick_up(item, other):
     if other.has(Player):
         # inventory = other.get(Inventory)
         extra = inventory.add(item.item_type, item.quantity)
+        pick_up_sound.play()
         item.quantity -= item.quantity - extra
         if item.quantity <= 0:
             from core.area import area

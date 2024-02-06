@@ -125,7 +125,7 @@ class Player:
             self.combat.unequip()
 
         if is_mouse_just_pressed(1):
-            if self.combat.equipped is None:
+            if self.combat.equipped is None or not 'range' in self.combat.equipped.stats:
                 self.interact(mouse_pos)
             else:
                 self.combat.perform_attack()

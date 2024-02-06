@@ -1,4 +1,4 @@
-
+from core.sound import Sound
 
 class Action:
     def __init__(self, name, on):
@@ -24,6 +24,7 @@ class Choppable(Usable):
         super().__init__(obj_name)
         self.chopped_image = chopped_image
         self.is_chopped = False
+        self.sound = Sound('chop_tree.mp3')
 
     def on(self, other, distance):
         from components.player import Player, inventory
@@ -39,6 +40,7 @@ class Choppable(Usable):
         from core.effect import Effect
         Effect(other.x, other.y, 0, 1, 10, chop_best["item"].icon)
         if distance < 60:
+            self.sound.play()
             player.show_message("Chopping " + self.obj_name)
             self.entity.get(Sprite).set_image(self.chopped_image)
             self.is_chopped = True
@@ -49,6 +51,7 @@ class Choppable(Usable):
 class Minable(Usable):
     def __init__(self, obj_name):
         super().__init__(obj_name)
+        self.sound = Sound('mine_rock.mp3')
 
     def on(self, other, distance):
         from components.player import Player, inventory
@@ -60,6 +63,7 @@ class Minable(Usable):
         from core.effect import Effect
         Effect(other.x, other.y, 0, 1, 10, mine_best["item"].icon)
         if distance < 60:
+            self.sound.play()
             player.show_message("Mining " + self.obj_name)
             from core.area import area
             area.remove_entity(self.entity)

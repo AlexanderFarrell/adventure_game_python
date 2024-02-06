@@ -1,3 +1,4 @@
+from core.sound import Sound
 
 class Combat:
     def __init__(self, health, on_death):
@@ -8,6 +9,7 @@ class Combat:
         self.regen = 0.01
         self.on_death = on_death
         self.weapon_sprite = None
+        self.sound = None
         from core.engine import engine
         engine.active_objs.append(self)
 
@@ -16,6 +18,8 @@ class Combat:
         from components.sprite import Sprite
         self.equipped = item
         print("equipping", self.equipped)
+        if 'sound' in self.equipped.stats:
+            self.sound = Sound(self.equipped.stats['sound'])
         self.weapon_sprite = Entity(Sprite(self.equipped.icon_name)).get(Sprite)
 
     def unequip(self):
@@ -23,6 +27,7 @@ class Combat:
         self.equipped = None    
         self.weapon_sprite.entity.delete_self()
         self.weapon_sprite = None
+        self.sound = None
         print("Weapon sprite", self.weapon_sprite)
             
 
@@ -47,6 +52,8 @@ class Combat:
         other.health -= damage
         self.global_cooldown = self.equipped.stats['cooldown']*60
         print(self.global_cooldown)
+        if self.sound is not None:
+            self.sound.play()
 
         from core.effect import create_hit_text, Effect
         create_hit_text(other.entity.x, other.entity.y, str(damage), (255, 0, 0))
@@ -63,6 +70,10 @@ class Combat:
             # put it here!
             return
         
+        if not 'range' in self.equipped.stats:
+            # Weapon has no range
+            return 
+
         from components.physics import get_bodies_within_circle
         nearby_objs = get_bodies_within_circle(self.entity.x, 
                                                self.entity.y, 

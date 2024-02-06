@@ -8,3 +8,6 @@ https://pixabay.com/sound-effects/chopping-small-wood-pieces-27536/
 mine_rock.mp3:
 https://pixabay.com/sound-effects/chopping-small-wood-pieces-27536/
 
+pick_up.mp3:
+https://pixabay.com/sound-effects/item-equip-6904/
+

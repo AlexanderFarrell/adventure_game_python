@@ -64,12 +64,10 @@ class Engine:
                 elif event.type == pygame.MOUSEBUTTONUP:
                     mouse_buttons_down.remove(event.button)
                 elif event.type == pygame.MOUSEWHEEL:
-                    print(event.x, event.y)
                     from core.input import add_scroll_delta
                     add_scroll_delta(event.y)
                 elif event.type == pygame.TEXTINPUT:
                     from core.input import text_input_listeners
-                    print(event.text)
                     for t in text_input_listeners:
                         t.text_input(event.text)
 

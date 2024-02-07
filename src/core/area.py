@@ -1,4 +1,5 @@
 from core.map import Map
+import traceback
 
 area = None
 map_folder_location = "content/maps"
@@ -46,8 +47,6 @@ class Area:
         # Load the map
         self.map = Map(tile_map_data, self.tile_types)
 
-        if self.editor_mode:
-            return
 
         # Load the entities
         self.entities = []
@@ -58,9 +57,19 @@ class Area:
                 id = int(items[0])
                 x = int(items[1])
                 y = int(items[2])
-                self.entities.append(create_entity(id, x, y, items[3:]))
+                e = create_entity(id, x, y, items[3:])
+                if self.editor_mode:
+                    from components.sprite import Sprite
+                    for c in e.components:
+                        print(c)
+                        if not isinstance(c, Sprite):
+                            print("Calling remove")
+                            e.remove_component(c)
+                self.entities.append(e)
+
             except Exception as e:
                 print(f"Error parsing line: {line}. {e}")
+                traceback.print_exc()
 
     def save_file(self, filename):
         if not self.editor_mode:

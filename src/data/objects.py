@@ -9,44 +9,76 @@ from components.usable import Usable, Choppable, Minable
 from components.enemy import Enemy
 from components.npc import NPC
 
+class EntityFactory:
+    def __init__(self, name, factory, arg_names=[]):
+        self.name = name
+        self.factory = factory
+        self.arg_names = arg_names
 
 entity_factories = [
-    # 0 - Player
-    lambda args: Entity(Player(100), Sprite("player.png"), Body(8, 48, 16, 16)),
+    # 0
+    EntityFactory('Player', 
+                 lambda args: Entity(Player(100), Sprite("player.png"), Body(8, 48, 16, 16)),
+                 ), 
 
-    # 1 - Pine Tree
-    lambda args: Entity(Sprite("tree.png"), 
+    # 1
+    EntityFactory('Pine Tree', 
+                 lambda args: Entity(Sprite("tree.png"), 
                         Body(16, 96, 32, 32), 
-                        Choppable("Pine Tree", "tree_stump.png")),      
+                        Choppable("Pine Tree", "tree_stump.png")), 
+                 ),
 
-    # 2 - Small Rock
-    lambda args: Entity(Sprite("rock.png"), Body(), Minable("Rock")), 
+    # 2
+    EntityFactory('Rock',
+                 lambda args: Entity(Sprite("rock.png"), Body(), Minable("Rock")), 
+                 ), 
 
-    # 3 - Teleporter Up
-    lambda args: Entity(Teleporter(args[0], args[1], args[2]), Sprite("teleporter_up.png")),
+    # 3
+    EntityFactory('Teleporter Up', 
+                 lambda args: Entity(Teleporter(args[0], args[1], args[2]), Sprite("teleporter_up.png")),
+                 ['Area File', 'Player X', 'Player Y']
+                 ), 
 
-    # 4 - Teleporter Right
-    lambda args: Entity(Teleporter(args[0], args[1], args[2]), Sprite("teleporter_right.png")),
+    # 4
+    EntityFactory('Teleporter Right', 
+                 lambda args: Entity(Teleporter(args[0], args[1], args[2]), Sprite("teleporter_right.png")),
+                 ['Area File', 'Player X', 'Player Y']
+                 ), 
 
-    # 5 - Teleporter Down
-    lambda args: Entity(Teleporter(args[0], args[1], args[2]), Sprite("teleporter_down.png")),
+    # 5
+    EntityFactory('Teleporter Down', 
+                 lambda args: Entity(Teleporter(args[0], args[1], args[2]), Sprite("teleporter_down.png")),
+                ['Area File', 'Player X', 'Player Y']
+                ), 
 
-    # 6 - Teleporter Left
-    lambda args: Entity(Teleporter(args[0], args[1], args[2]), Sprite("teleporter_left.png")),
+    # 6
+    EntityFactory('Teleporter Left', 
+                 lambda args: Entity(Teleporter(args[0], args[1], args[2]), Sprite("teleporter_left.png")),
+                 ['Area File', 'Player X', 'Player Y']
+                 ), 
 
-    # 7 - Dropped Item which can only be picked up once
-    lambda args: Entity(DroppedItem(item_types[int(args[0])], int(args[1])), 
+    # 7
+    EntityFactory('Dropped Item', 
+                 lambda args: Entity(DroppedItem(item_types[int(args[0])], int(args[1])), 
                         Sprite(item_types[int(args[0])].icon_name)),
+                 ['Area File', 'Player X', 'Player Y']
+                 ), 
 
-    # 8 - NPC
-    lambda args: Entity(Sprite(args[1]), NPC(args[0], args[2])),
-    
-    # 9 - Enemy
-    lambda args: Entity(Sprite(args[0]), Enemy(100, 4), Body(8, 48, 16, 16))
+    # 8
+    EntityFactory('NPC', 
+                 lambda args: Entity(Sprite(args[1]), NPC(args[0], args[2])),
+                ['Sprite', 'NPC Name', 'NPC File']
+                ), 
+
+    # 9
+    EntityFactory('Enemy',
+                 lambda args: Entity(Sprite(args[0]), Enemy(100, 4), Body(8, 48, 16, 16)),
+                 ['Sprite']
+                 )
 ]
 
 def create_entity(id, x, y, data=None, index=None):
-    factory = entity_factories[id]
+    factory = entity_factories[id].factory
     e =  factory(data)
     e.index = index
     e.x = x*32

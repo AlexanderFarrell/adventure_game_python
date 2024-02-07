@@ -33,7 +33,13 @@ class Entity:
 
     def remove(self, kind):
         c = self.get(kind)
+        self.remove_component(c)
+
+    def remove_component(self, c):
         if c is not None:
+            g = getattr(c, "breakdown", None)
+            if callable(g):
+                c.breakdown()
             c.entity = None
             self.components.remove(c)
 

@@ -39,6 +39,11 @@ class InventoryView:
         from core.engine import engine
         engine.active_objs.append(self)
 
+    def breakdown(self):
+        from core.engine import engine
+        engine.active_objs.remove(self)
+        self.clear()
+
     def update(self):
         import pygame
         from core.input import is_mouse_just_pressed
@@ -108,7 +113,4 @@ class InventoryView:
     def refresh(self):
         self.clear()
         self.render()
-
-    def breakdown(self):
-        pass
 

@@ -53,6 +53,15 @@ class Player:
         
         print("Setup called")
 
+    def breakdown(self):
+        self.loc_label.entity.delete_self()
+        self.message_label.entity.delete_self()
+        self.inventory_window.delete_self()
+        self.health_bar.entity.delete_self()
+        from core.engine import engine
+        engine.active_objs.remove(self)
+        print("Called breakdown")
+
     def interact(self, mouse_pos):
         from core.engine import engine
         for usable in engine.usables:

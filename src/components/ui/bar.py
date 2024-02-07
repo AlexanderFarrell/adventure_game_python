@@ -11,6 +11,10 @@ class Bar:
         from core.engine import engine
         engine.ui_drawables.append(self)
 
+    def breakdown(self):
+        from core.engine import engine
+        engine.ui_drawables.remove(self)
+
 
     def draw(self, screen):
         # Figure out amount

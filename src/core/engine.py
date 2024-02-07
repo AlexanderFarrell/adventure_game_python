@@ -61,6 +61,11 @@ class Engine:
                     mouse_buttons_just_pressed.add(event.button)
                 elif event.type == pygame.MOUSEBUTTONUP:
                     mouse_buttons_down.remove(event.button)
+                elif event.type == pygame.TEXTINPUT:
+                    from core.input import text_input_listeners
+                    print(event.text)
+                    for t in text_input_listeners:
+                        t.text_input(event.text)
 
             # Update Code
             for a in self.active_objs:

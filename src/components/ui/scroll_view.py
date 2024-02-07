@@ -1,14 +1,19 @@
 import pygame
+from math import floor
 
 padding = 3
-border_color = (0, 0, 0)
-background_color = (40, 180, 200)
+border_color = (255, 255, 255)
+# background_color = (40, 180, 200)
+background_color = (0, 0, 0)
 sensitivity = 16
 
 def create_scroll_label_generic(item, scroll_view):
     from components.entity import Entity
     from components.label import Label
-    return Entity(Label("EBGaramond-Regular.ttf", item, scroll_view.item_size))
+    return Entity(Label("Roboto/RobotoMono-Medium.ttf", item, scroll_view.item_size))
+
+def print_on_choose(item):
+    print(item)
 
 class ScrollView:
     # Items
@@ -46,10 +51,13 @@ class ScrollView:
             self.child_entities.append(entity)
 
     def get_scroll_max(self):
-        return self.item_size * len(self.items) + self.click_area.height * 0.5
+        m = self.item_size * len(self.items) - self.click_area.height * 0.5
+        if m < 0:
+            m = 0
+        return m
 
     def update(self):
-        from core.input import is_mouse_pressed, is_key_just_pressed
+        from core.input import is_mouse_just_pressed
         from core.engine import engine
         mouse_pos = pygame.mouse.get_pos()
 
@@ -58,6 +66,17 @@ class ScrollView:
 
         if x <= mouse_pos[0] <= x + self.click_area.width and \
             y <= mouse_pos[1] <= y + self.click_area.height:
+
+            # Handle Mouse Clicks
+            if is_mouse_just_pressed(1):
+                # Determine which element is being pressed
+                mouse_y = mouse_pos[1]
+                item_index = int((mouse_y + self.inner_y - self.entity.y)/self.item_size)
+                if len(self.items) > item_index:
+                    self.on_choose(self.items[item_index])
+
+
+            # Handle Scrolling
             from core.input import scroll_delta
             self.inner_y -= scroll_delta * sensitivity
             # Clamp the position
@@ -66,7 +85,6 @@ class ScrollView:
                 self.inner_y = 0
             if self.inner_y > m:
                 self.inner_y = m
-            print(self.inner_y)
             for i, entity in enumerate(self.child_entities):
                 entity.y = i * self.item_size - self.inner_y
 

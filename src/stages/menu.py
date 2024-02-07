@@ -7,7 +7,7 @@ from components.sprite import Sprite
 
 def editor_press():
     from core.engine import engine
-    engine.switch_to("Editor")
+    engine.switch_to("EditorChooseFile")
 
 def new_game():
     from core.engine import engine

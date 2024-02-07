@@ -4,10 +4,11 @@ area = None
 map_folder_location = "content/maps"
 
 class Area:
-    def __init__(self, area_file, tile_types):
+    def __init__(self, area_file, tile_types, editor_mode=False):
         global area
         area = self
         self.tile_types = tile_types
+        self.editor_mode = editor_mode
         self.load_file(area_file)
 
     def search_for_first(self, kind):
@@ -45,6 +46,9 @@ class Area:
         # Load the map
         self.map = Map(tile_map_data, self.tile_types)
 
+        if self.editor_mode:
+            return
+
         # Load the entities
         self.entities = []
         entity_lines = entity_data.split('\n')[1:]
@@ -57,6 +61,11 @@ class Area:
                 self.entities.append(create_entity(id, x, y, items[3:]))
             except Exception as e:
                 print(f"Error parsing line: {line}. {e}")
+
+    def save_file(self, filename):
+        if not self.editor_mode:
+            raise Exception("Cannot save file, not in editor mode")
+
         
         
 # 2 5 13 1

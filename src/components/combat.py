@@ -17,6 +17,8 @@ class Combat:
         from components.entity import Entity
         from components.sprite import Sprite
         self.equipped = item
+        if self.equipped is None:
+            return
         print("equipping", self.equipped)
         if 'sound' in self.equipped.stats:
             self.sound = Sound(self.equipped.stats['sound'])

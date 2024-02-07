@@ -3,19 +3,37 @@ from components.ui.scroll_view import ScrollView, create_scroll_label_generic, p
 from components.entity import Entity
 from components.button import Button, create_simple_label_button
 from components.label import Label
+from stages.editor.edit_map import prepare_map_editor
 
 page_width = 500
 new_map_input = None
 
 def create_map():
+
     # Check if user wrote .map
     if len(new_map_input.text) < 4 or new_map_input.text[-4:] != ".map":
         new_map_input.max_text += 5
         new_map_input.set_text(new_map_input.text + ".map")
+
+    filename = new_map_input.text
+
+    # Check if already exists!
+    import os 
+    if os.path.exists("content/maps/" + filename):
+        print(f"Error, map already exists: {filename}")
+        return
+
     print(f"Creating map {new_map_input.text}")
+
+    prepare_map_editor(filename, True)
+    from core.engine import engine
+    engine.switch_to("EditorEditMap")
 
 def load_map(name):
     print(f"Loading map {name}")
+    prepare_map_editor(name, False)
+    from core.engine import engine
+    engine.switch_to("EditorEditMap")
 
 def back():
     from core.engine import engine

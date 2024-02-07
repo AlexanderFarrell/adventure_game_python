@@ -7,10 +7,11 @@ padding = 5
 cursor_width = 2
 
 class TextInput(Label):
-    def __init__(self, font, text="", size=32, width=200, color=(255, 255, 255)):
+    def __init__(self, font, text="", size=32, max_text=20, width=400, color=(255, 255, 255)):
         super().__init__(font, text, size, color)
         self.active = False
         self.text = text
+        self.max_text = max_text
         from core.engine import engine
         from core.input import text_input_listeners
         text_input_listeners.append(self)
@@ -53,7 +54,13 @@ class TextInput(Label):
         if not self.active:
             return
         self.text += text
+        if len(self.text) > self.max_text:
+            self.text = self.text[:20]
         self.set_text(self.text)
+
+    def breakdown(self):
+        from core.input import text_input_listeners
+        text_input_listeners.remove(self)
 
     def draw(self, screen):
         screen.blit(self.background, (self.entity.x, self.entity.y))

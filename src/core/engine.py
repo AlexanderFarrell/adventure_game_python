@@ -42,9 +42,11 @@ class Engine:
 
     def run(self):
         from core.input import keys_down, mouse_buttons_down, \
-                mouse_buttons_just_pressed, keys_just_pressed
+                mouse_buttons_just_pressed, keys_just_pressed, \
+                reset_scroll
         self.running = True
         while self.running:
+            reset_scroll()
             mouse_buttons_just_pressed.clear()
             keys_just_pressed.clear()
             self.step += 1
@@ -61,6 +63,10 @@ class Engine:
                     mouse_buttons_just_pressed.add(event.button)
                 elif event.type == pygame.MOUSEBUTTONUP:
                     mouse_buttons_down.remove(event.button)
+                elif event.type == pygame.MOUSEWHEEL:
+                    print(event.x, event.y)
+                    from core.input import add_scroll_delta
+                    add_scroll_delta(event.y)
                 elif event.type == pygame.TEXTINPUT:
                     from core.input import text_input_listeners
                     print(event.text)

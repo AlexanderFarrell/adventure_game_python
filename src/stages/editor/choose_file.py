@@ -3,6 +3,7 @@ from components.ui.scroll_view import ScrollView, create_scroll_label_generic, p
 from components.entity import Entity
 from components.button import Button, create_simple_label_button
 from components.label import Label
+from components.sprite import Sprite
 
 page_width = 500
 new_map_input = None
@@ -28,6 +29,8 @@ def get_maps():
     return files
 
 def editor_choose_file():
+    Entity(Sprite("background2.png", True))
+
     global new_map_input
     maps = get_maps()
 

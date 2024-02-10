@@ -10,7 +10,6 @@ page_width = 500
 new_map_input = None
 
 def create_map():
-
     # Check if user wrote .map
     if len(new_map_input.text) < 4 or new_map_input.text[-4:] != ".map":
         new_map_input.max_text += 5
@@ -30,7 +29,7 @@ def create_map():
     from core.engine import engine
     engine.switch_to("EditorEditMap")
 
-def load_map(name):
+def load_map(name, index):
     print(f"Loading map {name}")
     prepare_map_editor(name, False)
     from core.engine import engine

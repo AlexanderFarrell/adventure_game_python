@@ -8,6 +8,7 @@ tile_size = 32
 class TileKind:
     def __init__(self, name, image, is_solid):
         self.name = name
+        self.image_name = image
         self.image = pygame.image.load(image_path + "/" + image)
         self.is_solid = is_solid
 
@@ -40,6 +41,18 @@ class Map:
             return True
         tile = self.tiles[y_tile][x_tile]
         return self.tile_kinds[tile].is_solid
+    
+    
+    def set_tile(self, x, y, index):
+        x_tile = int(x/self.tile_size)
+        y_tile = int(y/self.tile_size)
+        if x_tile < 0 or \
+            y_tile < 0 or \
+            y_tile >= len(self.tiles) or \
+            x_tile >= len(self.tiles[y_tile]):
+            return
+        print("Setting tile to", y_tile, x_tile, index)
+        self.tiles[y_tile][x_tile] = index
 
 
     def is_rect_solid(self, x, y, width, height):

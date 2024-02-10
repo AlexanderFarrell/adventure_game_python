@@ -12,6 +12,11 @@ def create_scroll_label_generic(item, scroll_view):
     from components.label import Label
     return Entity(Label("Roboto/RobotoMono-Medium.ttf", item, scroll_view.item_size))
 
+def create_scroll_sprite_generic(item, scroll_view):
+    from components.sprite import Sprite
+    from components.entity import Entity
+    return Entity(Sprite(item, True))
+
 def print_on_choose(item):
     print(item)
 
@@ -42,6 +47,7 @@ class ScrollView:
         for i, item in enumerate(self.items):
             entity = self.on_create(item, self)
             entity.y = i * self.item_size
+            entity.x = padding
             # Reassign any drawables to us
             from core.engine import engine
             for c in entity.components:
@@ -73,7 +79,7 @@ class ScrollView:
                 mouse_y = mouse_pos[1]
                 item_index = int((mouse_y + self.inner_y - self.entity.y)/self.item_size)
                 if len(self.items) > item_index:
-                    self.on_choose(self.items[item_index])
+                    self.on_choose(self.items[item_index], item_index)
 
 
             # Handle Scrolling
@@ -90,7 +96,7 @@ class ScrollView:
 
 
     def draw(self, screen):
-        self.surface.blit(self.background, (0, 0))
+        # self.surface.blit(self.background, (0, 0))
         for d in self.drawables:
             d.draw(self.surface)
         screen.blit(self.surface, (self.entity.x, self.entity.y))

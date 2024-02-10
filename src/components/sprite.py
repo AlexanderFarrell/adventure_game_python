@@ -16,7 +16,11 @@ class Sprite:
         else:
             self.image = pygame.image.load(image_path + "/" + image)
             loaded[image] = self.image
-        engine.drawables.append(self)
+        
+        if is_ui:
+            engine.ui_drawables.append(self)
+        else:
+            engine.drawables.append(self)
 
     def set_image(self, image):
         if image in loaded:
@@ -33,7 +37,10 @@ class Sprite:
 
     def breakdown(self):
         from core.engine import engine
-        engine.drawables.remove(self)
+        if self.is_ui:
+            engine.ui_drawables.remove(self)
+        else:
+            engine.drawables.remove(self)
 
     def draw(self, screen):
         pos = (self.entity.x - camera.x, self.entity.y - camera.y) \

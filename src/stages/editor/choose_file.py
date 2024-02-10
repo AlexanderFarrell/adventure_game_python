@@ -4,6 +4,7 @@ from components.entity import Entity
 from components.button import Button, create_simple_label_button
 from components.label import Label
 from stages.editor.edit_map import prepare_map_editor
+from components.sprite import Sprite
 
 page_width = 500
 new_map_input = None
@@ -46,6 +47,8 @@ def get_maps():
     return files
 
 def editor_choose_file():
+    Entity(Sprite('background2.png', True))
+
     global new_map_input
     maps = get_maps()
 

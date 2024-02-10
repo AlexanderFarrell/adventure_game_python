@@ -3,8 +3,9 @@ from components.ui.scroll_view import ScrollView, create_scroll_label_generic, p
 from components.entity import Entity
 from components.button import Button, create_simple_label_button
 from components.label import Label
-from stages.editor.edit_map import prepare_map_editor
+from stages.editor.edit_map import set_filename
 from components.sprite import Sprite
+import shutil
 
 page_width = 500
 new_map_input = None
@@ -23,15 +24,15 @@ def create_map():
         print(f"Error, map already exists: {filename}")
         return
 
-    print(f"Creating map {new_map_input.text}")
+    shutil.copyfile("content/maps/template.map", "content/maps/" + filename)
 
-    prepare_map_editor(filename, True)
+    set_filename(filename)
     from core.engine import engine
     engine.switch_to("EditorEditMap")
 
 def load_map(name, index):
     print(f"Loading map {name}")
-    prepare_map_editor(name, False)
+    set_filename(name)
     from core.engine import engine
     engine.switch_to("EditorEditMap")
 
@@ -42,6 +43,8 @@ def back():
 def get_maps():
     import os
     files = os.listdir("content/maps")
+    if 'template.map' in files:
+        files.remove('template.map')
     files.sort()
     return files
 

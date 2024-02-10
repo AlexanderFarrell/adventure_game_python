@@ -56,6 +56,13 @@ class ScrollView:
                     self.drawables.append(c)
             self.child_entities.append(entity)
 
+    def breakdown(self):
+        self.child_entities.clear()
+        self.drawables.clear()
+        from core.engine import engine
+        engine.active_objs.remove(self)
+        engine.ui_drawables.remove(self)
+
     def get_scroll_max(self):
         m = self.item_size * len(self.items) - self.click_area.height * 0.5
         if m < 0:

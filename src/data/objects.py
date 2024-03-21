@@ -10,19 +10,22 @@ from components.enemy import Enemy
 from components.npc import NPC
 
 class EntityFactory:
-    def __init__(self, name, factory, arg_names=[]):
+    def __init__(self, name, icon, factory, arg_names=[]):
         self.name = name
+        self.icon = icon
         self.factory = factory
         self.arg_names = arg_names
 
 entity_factories = [
     # 0
     EntityFactory('Player', 
+                  "player.png",
                  lambda args: Entity(Player(100), Sprite("player.png"), Body(8, 48, 16, 16)),
                  ), 
 
     # 1
     EntityFactory('Pine Tree', 
+                  'tree.png',
                  lambda args: Entity(Sprite("tree.png"), 
                         Body(16, 96, 32, 32), 
                         Choppable("Pine Tree", "tree_stump.png")), 
@@ -30,35 +33,41 @@ entity_factories = [
 
     # 2
     EntityFactory('Rock',
+                  'rock.png',
                  lambda args: Entity(Sprite("rock.png"), Body(), Minable("Rock")), 
                  ), 
 
     # 3
-    EntityFactory('Teleporter Up', 
+    EntityFactory('Teleporter Up'
+                  'teleporter_up.png', 
                  lambda args: Entity(Teleporter(args[0], args[1], args[2]), Sprite("teleporter_up.png")),
                  ['Area File', 'Player X', 'Player Y']
                  ), 
 
     # 4
-    EntityFactory('Teleporter Right', 
+    EntityFactory('Teleporter Right',
+                  'teleporter_right.png', 
                  lambda args: Entity(Teleporter(args[0], args[1], args[2]), Sprite("teleporter_right.png")),
                  ['Area File', 'Player X', 'Player Y']
                  ), 
 
     # 5
     EntityFactory('Teleporter Down', 
+                  'teleporter_down.png',
                  lambda args: Entity(Teleporter(args[0], args[1], args[2]), Sprite("teleporter_down.png")),
                 ['Area File', 'Player X', 'Player Y']
                 ), 
 
     # 6
     EntityFactory('Teleporter Left', 
+                  'teleporter_left.png',
                  lambda args: Entity(Teleporter(args[0], args[1], args[2]), Sprite("teleporter_left.png")),
                  ['Area File', 'Player X', 'Player Y']
                  ), 
 
     # 7
     EntityFactory('Dropped Item', 
+                  'diamond.png',
                  lambda args: Entity(DroppedItem(item_types[int(args[0])], int(args[1])), 
                         Sprite(item_types[int(args[0])].icon_name)),
                  ['Area File', 'Player X', 'Player Y']
@@ -66,12 +75,14 @@ entity_factories = [
 
     # 8
     EntityFactory('NPC', 
+                  'npc_female1.png',
                  lambda args: Entity(Sprite(args[1]), NPC(args[0], args[2])),
                 ['Sprite', 'NPC Name', 'NPC File']
                 ), 
 
     # 9
     EntityFactory('Enemy',
+                  'npc_female2.png',
                  lambda args: Entity(Sprite(args[0]), Enemy(100, 4), Body(8, 48, 16, 16)),
                  ['Sprite']
                  )

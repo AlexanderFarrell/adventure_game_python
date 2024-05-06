@@ -57,15 +57,21 @@ class Area:
                 id = int(items[0])
                 x = int(items[1])
                 y = int(items[2])
-                e = create_entity(id, x, y, items[3:])
                 if self.editor_mode:
+                    from components.entity import Entity
                     from components.sprite import Sprite
-                    for c in e.components:
-                        print(c)
-                        if not isinstance(c, Sprite):
-                            print("Calling remove")
-                            e.remove_component(c)
-                self.entities.append(e)
+                    from components.editor.entity_placeholder import EntityPlaceholder, taken_positions
+                    from data.objects import entity_factories
+                    pos = x * 10000000 + y
+                    e = Entity(Sprite(entity_factories[id].icon), 
+                               EntityPlaceholder(id, items[3:]), 
+                               x=x*32, 
+                               y=y*32)
+                    taken_positions.add(pos)
+                    self.entities.append(e)
+                else:
+                    e = create_entity(id, x, y, items[3:])
+                    self.entities.append(e)
 
             except Exception as e:
                 print(f"Error parsing line: {line}. {e}")

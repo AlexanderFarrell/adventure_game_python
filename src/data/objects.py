@@ -38,7 +38,7 @@ entity_factories = [
                  ), 
 
     # 3
-    EntityFactory('Teleporter Up'
+    EntityFactory('Teleporter Up',
                   'teleporter_up.png', 
                  lambda args: Entity(Teleporter(args[0], args[1], args[2]), Sprite("teleporter_up.png")),
                  ['Area File', 'Player X', 'Player Y']

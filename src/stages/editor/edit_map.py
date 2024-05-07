@@ -107,17 +107,15 @@ def place_entity(mouse_x, mouse_y):
     y = mouse_y + camera.y
     entity_x = int(x / area.map.tile_size) * 32
     entity_y = int(y / area.map.tile_size) * 32
-    from components.editor.entity_placeholder import EntityPlaceholder, taken_positions
-    pos = x * 10000000 + y
-    if not pos in taken_positions:
-        taken_positions.add(pos)
-        e = Entity(Sprite(entity_factories[current_entity_index].icon), 
+    from components.editor import EntityPlaceholder
+    e = Entity(Sprite(entity_factories[current_entity_index].icon), 
             EntityPlaceholder(current_entity_index), 
             x=entity_x, 
             y=entity_y)
+    # If the position wasn't valid, the placeholder will delete itself.
+    if e.has(EntityPlaceholder):
         from core.area import area
         area.entities.append(e)
-    # create_entity(current_entity_index, entity_x, entity_y)
     
 
 def click_tool(mouse_x, mouse_y):
@@ -131,7 +129,7 @@ def click_tool(mouse_x, mouse_y):
                 mouse_y > e.y and \
                 mouse_x < e.x + sprite.image.get_width() and \
                 mouse_y < e.y + sprite.image.get_height():
-                from components.editor.entity_placeholder import EntityPlaceholder
+                from components.editor import EntityPlaceholder
                 from data.objects import entity_factories
                 global selected_entity
                 selected_entity = e
@@ -151,10 +149,6 @@ def delete_tool(mouse_x, mouse_y):
                 mouse_y > e.y and \
                 mouse_x < e.x + sprite.image.get_width() and \
                 mouse_y < e.y + sprite.image.get_height():
-                pos = e.x * 10000000 + e.y
-                from components.editor.entity_placeholder import taken_positions
-                if pos in taken_positions:
-                    taken_positions.remove(pos)
                 e.delete_self()
                 return # Once we find one, stop looking. Optimization
 

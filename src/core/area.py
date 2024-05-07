@@ -60,15 +60,14 @@ class Area:
                 if self.editor_mode:
                     from components.entity import Entity
                     from components.sprite import Sprite
-                    from components.editor.entity_placeholder import EntityPlaceholder, taken_positions
+                    from components.editor import EntityPlaceholder
                     from data.objects import entity_factories
-                    pos = x * 10000000 + y
                     e = Entity(Sprite(entity_factories[id].icon), 
                                EntityPlaceholder(id, items[3:]), 
                                x=x*32, 
                                y=y*32)
-                    taken_positions.add(pos)
-                    self.entities.append(e)
+                    if e.has(EntityPlaceholder):
+                        self.entities.append(e)
                 else:
                     e = create_entity(id, x, y, items[3:])
                     self.entities.append(e)

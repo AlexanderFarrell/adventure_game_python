@@ -1,7 +1,6 @@
 from core.input import is_key_pressed
 from components.entity import Entity
 import pygame
-from components.editor.place_tiles import PlaceTiles
 
 movement_speed = 8
 
@@ -30,5 +29,5 @@ class EditorHelper:
     def switch_tool(self, tool):
         if self.sidebar is not None:
             self.sidebar.delete_self()
-        if tool == 'tiles':
-            self.sidebar = Entity(PlaceTiles())
+        # if tool == 'tiles':
+            # self.sidebar = Entity(PlaceTiles())

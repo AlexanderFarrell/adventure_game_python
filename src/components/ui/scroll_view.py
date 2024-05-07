@@ -15,7 +15,10 @@ def create_scroll_label_generic(item, scroll_view):
 def create_scroll_sprite_generic(item, scroll_view):
     from components.sprite import Sprite
     from components.entity import Entity
-    return Entity(Sprite(item, True))
+    e = Entity(Sprite(item, True))
+    s = e.get(Sprite)
+    s.scale(32, 32)
+    return e
 
 def print_on_choose(item):
     print(item)
@@ -103,7 +106,7 @@ class ScrollView:
 
 
     def draw(self, screen):
-        # self.surface.blit(self.background, (0, 0))
+        self.surface.blit(self.background, (0, 0))
         for d in self.drawables:
             d.draw(self.surface)
         screen.blit(self.surface, (self.entity.x, self.entity.y))

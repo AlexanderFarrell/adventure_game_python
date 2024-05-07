@@ -13,20 +13,24 @@ class TileKind:
         self.is_solid = is_solid
 
 class Map:
-    def __init__(self, data, tile_kinds):
+    def __init__(self, data, tile_kinds, legacy_data=False):
         from core.engine import engine
         engine.background_drawables.append(self)
 
         # Keep a list of different kinds of files (grass, sand, water, etc.)
         self.tile_kinds = tile_kinds
 
-        # Set up the tiles from loaded data
-        self.tiles = []
-        for line in data.split('\n'):
-            row = []
-            for tile_number in line:
-                row.append(int(tile_number))
-            self.tiles.append(row)
+        if legacy_data:
+            # Set up the tiles from loaded data
+            self.tiles = []
+            for line in data.split('\n'):
+                row = []
+                for tile_number in line:
+                    row.append(int(tile_number))
+                self.tiles.append(row)
+            print(self.tiles)
+        else:
+            self.tiles = data
 
         # How big in pixels are the tiles?
         self.tile_size = tile_size
@@ -72,6 +76,15 @@ class Map:
         if self.is_point_solid(x + width, y + height):
             return True
         return False
+    
+    def save_to_file(self, file):
+        import struct
+        # Save the width and height
+        for row in self.tiles:
+            for n in row:
+                packed = struct.pack('H', n)
+                file.write(packed)
+
 
     def draw(self, screen):
         # Go row by row

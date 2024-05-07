@@ -10,11 +10,12 @@ from components.enemy import Enemy
 from components.npc import NPC
 
 class EntityFactory:
-    def __init__(self, name, icon, factory, arg_names=[]):
+    def __init__(self, name, icon, factory, arg_names=[], defaults=[]):
         self.name = name
         self.icon = icon
         self.factory = factory
         self.arg_names = arg_names
+        self.defaults = defaults
 
 entity_factories = [
     # 0

@@ -105,6 +105,11 @@ class Engine:
 
 
     def reset(self):
+        from core.area import area
+        if area is not None:
+            e = area.entities.copy()
+            for a in e:
+                a.delete_self()
         from components.physics import reset_physics
         reset_physics()
         self.active_objs.clear()

@@ -2,9 +2,10 @@ taken_positions = set()
 
 
 class EntityPlaceholder:
-    def __init__(self, id, *args):
+    def __init__(self, id, args):
         self.id = id
         self.args = args
+        print(self.args.copy())
 
     def setup(self):
         global taken_positions

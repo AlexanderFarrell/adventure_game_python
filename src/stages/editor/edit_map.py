@@ -41,6 +41,8 @@ def set_tool(new_tool):
         e.delete_self()
         field_one = None
     tool_entities.clear()
+    if tool == "Save":
+        save_map()
     if tool == "Entity":
         from data.objects import entity_factories
         from core.camera import camera
@@ -82,7 +84,9 @@ def set_tool(new_tool):
 # ---- Map Editor Functionality ----
 # Saves the map file, overriding the previous one.
 def save_map():
-    print("Saving not implemented yet.")
+    from core.area import area
+    area.save_file(filename)
+    print("saving map!")
 
 def place_tile(mouse_x, mouse_y):
     # What tile is the mouse on?
@@ -109,7 +113,8 @@ def place_entity(mouse_x, mouse_y):
     entity_y = int(y / area.map.tile_size) * 32
     from components.editor import EntityPlaceholder
     e = Entity(Sprite(entity_factories[current_entity_index].icon), 
-            EntityPlaceholder(current_entity_index), 
+            EntityPlaceholder(current_entity_index,
+                              entity_factories[current_entity_index].defaults), 
             x=entity_x, 
             y=entity_y)
     # If the position wasn't valid, the placeholder will delete itself.

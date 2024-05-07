@@ -32,6 +32,7 @@ class Area:
 
     def load_file(self, area_file):
         import struct
+        from data.objects import create_entity
 
         file = open(map_folder_location + "/" + area_file, "rb")
         
@@ -69,6 +70,46 @@ class Area:
                 row.append(tile_number)
             tiles.append(row)
         self.map = Map(tiles, self.tile_types, False)
+
+        # Save each entity, delimited by a null terminated char
+        # We read all the rest of the data from the file for this
+        entity_data = file.read()
+
+        # Convert it to a string
+        entity_data = str(entity_data, encoding='utf-8')
+
+        # Split the string to get each entity
+        entities = entity_data.split('\0')
+
+        # Throw away the last one, because there is a null character at the very end
+        # of the file
+        entities = entities[:len(entities)-2]
+
+        # Load each entity
+        for line in entities:
+            try:
+                items = line.split(',')
+                id = int(items[0])
+                x = int(items[1])
+                y = int(items[2])
+                if self.editor_mode:
+                    from components.entity import Entity
+                    from components.sprite import Sprite
+                    from components.editor import EntityPlaceholder
+                    from data.objects import entity_factories
+                    e = Entity(Sprite(entity_factories[id].icon), 
+                               EntityPlaceholder(id, items[3:]), 
+                               x=x*32, 
+                               y=y*32)
+                    if e.has(EntityPlaceholder):
+                        self.entities.append(e)
+                else:
+                    e = create_entity(id, x, y, items[3:])
+                    self.entities.append(e)
+
+            except Exception as e:
+                print(f"Error parsing line: {line}. {e}")
+                traceback.print_exc()
 
         
 
@@ -155,15 +196,7 @@ class Area:
         # Save the Tile data
         self.map.save_to_file(file)
 
-        # Save each entity, delimited by a null terminated char
-        # We read all the rest of the data from the file for this
-        # entity_data = file.read()
-
-        # Convert it to a string
-        # entity_data = str(entity_data, encoding='utf-8')
-
-        # Split the string to get each entity
-        # entities = entity_data.split('\n')
+        
         print("Entities: ", self.entities)
         for e in self.entities:
             from components.editor import EntityPlaceholder

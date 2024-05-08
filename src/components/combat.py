@@ -27,7 +27,6 @@ class Combat:
     def unequip(self):
         print("calling unequip")
         self.equipped = None    
-        self.weapon_sprite.entity.delete_self()
         self.weapon_sprite = None
         self.sound = None
         print("Weapon sprite", self.weapon_sprite)
@@ -36,7 +35,6 @@ class Combat:
     def breakdown(self):
         from core.engine import engine
         engine.active_objs.remove(self)
-        self.weapon_sprite.entity.delete_self()
         self.weapon_sprite = None
 
     def attack(self, other):

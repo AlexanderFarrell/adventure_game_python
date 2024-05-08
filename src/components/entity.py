@@ -21,7 +21,6 @@ class Entity:
             if callable(g):
                 c.breakdown()
         self.components.clear()
-        print("called delete self")
 
     def add(self, component, perform_setup=True):
         component.entity = self

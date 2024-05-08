@@ -33,6 +33,9 @@ class Area:
     def load_file(self, area_file):
         import struct
         from data.objects import create_entity
+        from core.engine import engine
+        
+        engine.reset()
 
         file = open(map_folder_location + "/" + area_file, "rb")
         
@@ -56,9 +59,10 @@ class Area:
         version = struct.unpack('i', file.read(4))[0]
         tilemap_width = struct.unpack('i', file.read(4))[0]
         tilemap_height = struct.unpack('i', file.read(4))[0]
-        tilemap_width = int(tilemap_width)-1
-        tilemap_height = int(tilemap_height)-1
-        print(tilemap_width, tilemap_height)
+        tilemap_width = int(tilemap_width)
+        tilemap_height = int(tilemap_height)
+
+        print("loading", tilemap_width, tilemap_height)
 
         # Load tile data
         tiles = []
@@ -83,7 +87,8 @@ class Area:
 
         # Throw away the last one, because there is a null character at the very end
         # of the file
-        entities = entities[:len(entities)-2]
+        entities = entities[:len(entities)-1]
+        print(entities)
 
         # Load each entity
         for line in entities:
@@ -185,10 +190,12 @@ class Area:
 
         # Write the size of the tilemap
         # First Width, then height
+        print(self.map.tiles)
         width = len(self.map.tiles[0])
         height = len(self.map.tiles)
         file.write(struct.pack('i', width))
         file.write(struct.pack('i', height))
+        print("saving", width, height)
 
 
         # --- Body of the File ---
@@ -197,7 +204,6 @@ class Area:
         self.map.save_to_file(file)
 
         
-        print("Entities: ", self.entities)
         for e in self.entities:
             from components.editor import EntityPlaceholder
             p = e.get(EntityPlaceholder)
@@ -207,7 +213,6 @@ class Area:
             # then we save them. 
             if p.args is not None and len(p.args) != 0:
                 s += ","
-                print(p.args)
                 s += ",".join(p.args)
             b = bytes(s, 'utf-8')
             packed = struct.pack(f"{len(b)}s", b)

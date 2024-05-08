@@ -27,8 +27,8 @@ class Map:
                 row = []
                 for tile_number in line:
                     row.append(int(tile_number))
-                self.tiles.append(row)
-            print(self.tiles)
+                if len(row) > 0:
+                    self.tiles.append(row)
         else:
             self.tiles = data
 
@@ -55,7 +55,6 @@ class Map:
             y_tile >= len(self.tiles) or \
             x_tile >= len(self.tiles[y_tile]):
             return
-        print("Setting tile to", y_tile, x_tile, index)
         self.tiles[y_tile][x_tile] = index
 
 
@@ -80,18 +79,26 @@ class Map:
     def save_to_file(self, file):
         import struct
         # Save the width and height
-        for row in self.tiles:
-            for n in row:
+        i = 0
+        # print(len(self.tiles))
+        for y, row in enumerate(self.tiles):
+            for x, n in enumerate(row):
+                i += 2
+                if n > 50:
+                    print("freak out")
                 packed = struct.pack('H', n)
                 file.write(packed)
+                print("saving", x, y, i)
 
 
     def draw(self, screen):
         # Go row by row
         from core.camera import camera
         for y, row in enumerate(self.tiles):
+            # print(row)
             # Within the current row, go through each tile
             for x, tile in enumerate(row):
                 location = (x * self.tile_size - camera.x, y * self.tile_size - camera.y)
                 image = self.tile_kinds[tile].image
                 screen.blit(image, location)
+                    #print(f"Error at {x} and {y}")

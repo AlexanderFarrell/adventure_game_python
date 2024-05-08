@@ -42,28 +42,32 @@ entity_factories = [
     EntityFactory('Teleporter Up',
                   'teleporter_up.png', 
                  lambda args: Entity(Teleporter(args[0], args[1], args[2]), Sprite("teleporter_up.png")),
-                 ['Area File', 'Player X', 'Player Y']
+                 ['Area File', 'Player X', 'Player Y'],
+                 ['forest.map', '1', '1']
                  ), 
 
     # 4
     EntityFactory('Teleporter Right',
                   'teleporter_right.png', 
                  lambda args: Entity(Teleporter(args[0], args[1], args[2]), Sprite("teleporter_right.png")),
-                 ['Area File', 'Player X', 'Player Y']
+                 ['Area File', 'Player X', 'Player Y'],
+                 ['forest.map', '1', '1']
                  ), 
 
     # 5
     EntityFactory('Teleporter Down', 
                   'teleporter_down.png',
                  lambda args: Entity(Teleporter(args[0], args[1], args[2]), Sprite("teleporter_down.png")),
-                ['Area File', 'Player X', 'Player Y']
+                ['Area File', 'Player X', 'Player Y'],
+                 ['forest.map', '1', '1']
                 ), 
 
     # 6
     EntityFactory('Teleporter Left', 
                   'teleporter_left.png',
                  lambda args: Entity(Teleporter(args[0], args[1], args[2]), Sprite("teleporter_left.png")),
-                 ['Area File', 'Player X', 'Player Y']
+                 ['Area File', 'Player X', 'Player Y'],
+                 ['forest.map', '1', '1']
                  ), 
 
     # 7
@@ -71,21 +75,24 @@ entity_factories = [
                   'diamond.png',
                  lambda args: Entity(DroppedItem(item_types[int(args[0])], int(args[1])), 
                         Sprite(item_types[int(args[0])].icon_name)),
-                 ['Area File', 'Player X', 'Player Y']
+                 ['Item Type ID', 'Quantity'],
+                 ['1', '1']
                  ), 
 
     # 8
     EntityFactory('NPC', 
                   'npc_female1.png',
                  lambda args: Entity(Sprite(args[1]), NPC(args[0], args[2])),
-                ['Sprite', 'NPC Name', 'NPC File']
+                ['Sprite', 'NPC Name', 'NPC File'],
+                 ['npc_female1.png', 'Amy', 'amy.npc']
                 ), 
 
     # 9
     EntityFactory('Enemy',
                   'npc_female2.png',
                  lambda args: Entity(Sprite(args[0]), Enemy(100, 4), Body(8, 48, 16, 16)),
-                 ['Sprite']
+                 ['Sprite'],
+                 ['npc_female2.png']
                  )
 ]
 

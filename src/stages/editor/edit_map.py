@@ -86,7 +86,6 @@ def set_tool(new_tool):
 def save_map():
     from core.area import area
     area.save_file(filename)
-    print("saving map!")
 
 def place_tile(mouse_x, mouse_y):
     # What tile is the mouse on?
@@ -136,11 +135,54 @@ def click_tool(mouse_x, mouse_y):
                 mouse_y < e.y + sprite.image.get_height():
                 from components.editor import EntityPlaceholder
                 from data.objects import entity_factories
+                from core.camera import camera
+
                 global selected_entity
                 selected_entity = e
-                id = e.get(EntityPlaceholder).id
-                print(f"Selected {entity_factories[id].name}")
+                placeholder = e.get(EntityPlaceholder)
+                id = placeholder.id
+                factory = entity_factories[id]
+
+                # Clear out Previous Tools
+                for tool in tool_entities:
+                    tool.delete_self()
+                tool_entities.clear()
+
+                # Title of Entity
+                field_label = Entity(Label("EBGaramond-Regular.ttf", 
+                                           factory.name + ": "),
+                             y=camera.height-50).get(Label)
+                tool_entities.append(field_label.entity)
+                
+                # Do all properties
+                x = field_label.get_bounds().width
+                for i, arg in enumerate(factory.arg_names):
+                    print(e.get(EntityPlaceholder).args)
+                    label = Entity(Label("EBGaramond-Regular.ttf", 
+                                           arg),
+                             x=x,
+                             y=camera.height-100).get(Label)
+                    field = Entity(
+                        TextInput("EBGaramond-Regular.ttf", 
+                                  e.get(EntityPlaceholder).args[i], 
+                                  max_text=1,
+                                  width=200,
+                                  on_change=lambda n: set_arg(i, n)),
+                        x=x,
+                        y=camera.height-50
+                    ).get(TextInput)
+                    x += 220
+                    tool_entities.append(label.entity)
+                    tool_entities.append(field.entity)
+
+
+
                 return # Once we find one, stop looking. Optimization
+
+def set_arg(i, value):
+    from components.editor import EntityPlaceholder
+    selected_entity.get(EntityPlaceholder).args[i] = value
+    print(selected_entity.get(EntityPlaceholder).args)
 
             
 def delete_tool(mouse_x, mouse_y):
@@ -160,22 +202,24 @@ def delete_tool(mouse_x, mouse_y):
 
 # ---- User Interface ----
 def back_button_press():
-    global tool_entities
+    global tool_entities, selected_entity, tool
+    for t in tool_entities:
+        t.delete_self()
     tool_entities.clear()
+    selected_entity = None
+    tool = "Click"
 
     from core.engine import engine
     engine.switch_to("EditorChooseFile")
 
 def on_click():
     global tool
-    print("On Click Called")
     mouse_pos = pygame.mouse.get_pos()
     from core.camera import camera
     if mouse_pos[0] > camera.width-(32+3+3) or \
         (mouse_pos[0] < 64 and mouse_pos[1] < 64*4) or \
         (mouse_pos[1] > camera.height - 50):
         return
-    print(tool)
     if tool == "Click":
         click_tool(mouse_pos[0], mouse_pos[1])
     elif tool == "Tile":

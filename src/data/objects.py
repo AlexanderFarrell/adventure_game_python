@@ -83,8 +83,8 @@ entity_factories = [
     EntityFactory('NPC', 
                   'npc_female1.png',
                  lambda args: Entity(Sprite(args[1]), NPC(args[0], args[2])),
-                ['Sprite', 'NPC Name', 'NPC File'],
-                 ['npc_female1.png', 'Amy', 'amy.npc']
+                ['NPC Name', 'Sprite', 'NPC File'],
+                 ['Amy', "npc_female1.png", 'amy.npc']
                 ), 
 
     # 9

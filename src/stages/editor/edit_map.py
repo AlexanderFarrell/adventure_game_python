@@ -17,6 +17,7 @@ current_entity_index = 0    # The current entity to place with the Entity tool
 tool_entities = None        # Any UI Entities used in the current tool
 field_one = None            # A potential text field for the current tool
 selected_entity = None      # The current entity selected by the click tool
+fields = []                 # Fields which can be filled out for entities.
 
 # ---- Setters ----
 # Changes a tile to the one selected in the scroll view
@@ -125,6 +126,9 @@ def place_entity(mouse_x, mouse_y):
 def click_tool(mouse_x, mouse_y):
     # Look for current entity
     from core.area import area
+    from core.camera import camera
+    mouse_x += camera.x
+    mouse_y += camera.y
     for e in area.entities:
         if e.has(Sprite):
             sprite = e.get(Sprite)
@@ -137,7 +141,8 @@ def click_tool(mouse_x, mouse_y):
                 from data.objects import entity_factories
                 from core.camera import camera
 
-                global selected_entity
+                global selected_entity, fields
+                fields.clear()
                 selected_entity = e
                 placeholder = e.get(EntityPlaceholder)
                 id = placeholder.id
@@ -162,15 +167,18 @@ def click_tool(mouse_x, mouse_y):
                                            arg),
                              x=x,
                              y=camera.height-100).get(Label)
+                    
                     field = Entity(
                         TextInput("EBGaramond-Regular.ttf", 
                                   e.get(EntityPlaceholder).args[i], 
                                   max_text=1,
                                   width=200,
-                                  on_change=lambda n: set_arg(i, n)),
+                                  on_change=lambda: save_args()),
                         x=x,
                         y=camera.height-50
                     ).get(TextInput)
+                    fields.append(field)
+                    
                     x += 220
                     tool_entities.append(label.entity)
                     tool_entities.append(field.entity)
@@ -179,15 +187,22 @@ def click_tool(mouse_x, mouse_y):
 
                 return # Once we find one, stop looking. Optimization
 
-def set_arg(i, value):
+def save_args():
     from components.editor import EntityPlaceholder
-    selected_entity.get(EntityPlaceholder).args[i] = value
-    print(selected_entity.get(EntityPlaceholder).args)
+    print("Args: ", selected_entity.get(EntityPlaceholder).args)
+    for i, field in enumerate(fields):
+        value = field.text
+        print(i)
+        selected_entity.get(EntityPlaceholder).args[i] = value
+        print(selected_entity.get(EntityPlaceholder).args)
 
             
 def delete_tool(mouse_x, mouse_y):
     # Look for current entity
+    from core.camera import camera
     from core.area import area
+    mouse_x -= camera.x
+    mouse_y -= camera.y
     for e in area.entities:
         if e.has(Sprite):
             sprite = e.get(Sprite)

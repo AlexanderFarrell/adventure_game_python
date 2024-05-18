@@ -59,7 +59,7 @@ class TextInput(Label):
             self.text = self.text[:20]
         self.set_text(self.text)
         if self.on_change is not None:
-            self.on_change(self.text)
+            self.on_change()
 
     def breakdown(self):
         from core.input import text_input_listeners

@@ -155,10 +155,12 @@ class Player:
             self.entity.y -= movement_speed
             future_direction = up
             future_frames = up_frames
+            
         if is_key_pressed(pygame.K_s):
             self.entity.y += movement_speed
             future_direction = down
             future_frames = down_frames
+
         if not body.is_position_valid():
             self.entity.y = previous_y
 
@@ -187,6 +189,7 @@ class Player:
             self.entity.x -= movement_speed
             future_direction = left
             future_frames = left_frames
+
         if is_key_pressed(pygame.K_d):
             self.entity.x += movement_speed
             future_direction = right

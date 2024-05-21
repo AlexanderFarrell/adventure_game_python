@@ -201,8 +201,8 @@ def delete_tool(mouse_x, mouse_y):
     # Look for current entity
     from core.camera import camera
     from core.area import area
-    mouse_x -= camera.x
-    mouse_y -= camera.y
+    mouse_x += camera.x
+    mouse_y += camera.y
     for e in area.entities:
         if e.has(Sprite):
             sprite = e.get(Sprite)

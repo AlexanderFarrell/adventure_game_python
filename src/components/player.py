@@ -1,5 +1,5 @@
 import pygame
-from components.sprite import Sprite
+from components.sprite import Sprite, Animation
 from core.input import is_key_pressed
 from core.camera import camera
 from components.entity import Entity
@@ -15,12 +15,30 @@ movement_speed = 2
 inventory = Inventory(20)
 message_time_seconds = 3
 
+# Set a bunch of directions here to use later.
+left = 0
+up = 1
+right = 2
+down = 3
+down_frames =  [(0,0), (1,0), (2, 0), (3, 0)]
+up_frames =    [(0,1), (1,1), (2, 1), (3, 1)]
+right_frames = [(0,2), (1,2), (2, 2), (3, 2)]
+left_frames =  [(0,3), (1,3), (2, 3), (3, 3)]
+down_still =   [(0,0)]
+up_still =     [(0,1)]
+right_still =  [(0,2)]
+left_still =   [(0,3)]
+
 def on_player_death(entity):
     from core.engine import engine
     engine.switch_to('Play')
 
 class Player:
     def __init__(self, health):
+        # Keep track of which direction we are facing.
+        self.direction = down
+        self.is_walking = False
+
         from core.engine import engine
         engine.active_objs.append(self)
         self.loc_label = Entity(Label("EBGaramond-Regular.ttf", 
@@ -99,6 +117,26 @@ class Player:
         self.message_label.set_text(message)
         self.message_countdown = message_time_seconds * 60
 
+    def walk_animation(self, direction, frame_coords):
+        if self.direction != direction:
+            self.direction = direction
+            self.entity.get(Animation).set_frame_coords(frame_coords)
+            self.is_walking = True
+
+    def stop_animation(self):
+        a = self.entity.get(Animation)
+        self.is_walking = False
+        if len(a.frame_coords) != 1:
+            if self.direction == left:
+                a.set_frame_coords(left_still)
+            elif self.direction == right:
+                a.set_frame_coords(right_still)
+            elif self.direction == down:
+                a.set_frame_coords(down_still)
+            elif self.direction == up:
+                a.set_frame_coords(up_still)
+                
+        
     def update(self):
         if self.message_countdown > 0:
             self.message_countdown -= 1
@@ -110,11 +148,17 @@ class Player:
         sprite = self.entity.get(Sprite)
         body = self.entity.get(Body)
         self.health_bar.amount = self.combat.health
+        future_direction = None
+        future_frames = None
 
         if is_key_pressed(pygame.K_w):
             self.entity.y -= movement_speed
+            future_direction = up
+            future_frames = up_frames
         if is_key_pressed(pygame.K_s):
             self.entity.y += movement_speed
+            future_direction = down
+            future_frames = down_frames
         if not body.is_position_valid():
             self.entity.y = previous_y
 
@@ -141,12 +185,20 @@ class Player:
             
         if is_key_pressed(pygame.K_a):
             self.entity.x -= movement_speed
+            future_direction = left
+            future_frames = left_frames
         if is_key_pressed(pygame.K_d):
             self.entity.x += movement_speed
+            future_direction = right
+            future_frames = right_frames
         if not body.is_position_valid():
             self.entity.x = previous_x
         camera.x = self.entity.x - camera.width/2 + sprite.image.get_width()/2
         camera.y = self.entity.y - camera.height/2 + sprite.image.get_height()/2
+        if future_direction is not None:
+            self.walk_animation(future_direction, future_frames)
+        elif self.is_walking:
+            self.stop_animation()
 
         for t in triggers:
             if body.is_colliding_with(t):

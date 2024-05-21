@@ -1,5 +1,5 @@
 from components.entity import Entity
-from components.sprite import Sprite
+from components.sprite import Sprite, Animation
 from components.player import Player
 from components.physics import Body
 from components.teleporter import Teleporter
@@ -21,7 +21,7 @@ entity_factories = [
     # 0
     EntityFactory('Player', 
                   "player.png",
-                 lambda args: Entity(Player(100), Sprite("player.png"), Body(8, 48, 16, 16)),
+                 lambda args: Entity(Player(100), Animation("player_sheet2.png", 32, 64, [(0, 0)], 10), Body(8, 48, 16, 16)),
                  ), 
 
     # 1

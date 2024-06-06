@@ -17,6 +17,8 @@ class Sprite:
             self.image = pygame.image.load(image_path + "/" + image)
             loaded[image] = self.image
         
+        self.width = self.image.get_width()
+        self.height = self.image.get_height()
         if is_ui:
             engine.ui_drawables.append(self)
         else:
@@ -46,6 +48,10 @@ class Sprite:
         pos = (self.entity.x - camera.x, self.entity.y - camera.y) \
                 if not self.is_ui else \
                 (self.entity.x, self.entity.y)
-        screen.blit(self.image, pos)
+        if pos[0] < camera.width and \
+            pos[1] < camera.height and \
+            pos[0] + self.width > 0 and \
+            pos[1] + self.height > 0:
+            screen.blit(self.image, pos)
 
 # Load things uniquely.

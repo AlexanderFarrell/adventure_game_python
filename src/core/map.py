@@ -1,5 +1,5 @@
 import pygame
-from math import ceil
+from math import ceil, floor
 
 map_folder_location = "content/maps"
 image_path = "content/images"
@@ -94,11 +94,21 @@ class Map:
     def draw(self, screen):
         # Go row by row
         from core.camera import camera
-        for y, row in enumerate(self.tiles):
-            # print(row)
-            # Within the current row, go through each tile
-            for x, tile in enumerate(row):
+
+        x_start = int(camera.x / self.tile_size)
+        y_start = int(camera.y / self.tile_size)
+        x_end   = int((camera.x + camera.width)/self.tile_size)+1
+        y_end   = int((camera.y + camera.height)/self.tile_size)+1
+
+        # Limit the values to the map
+        x_start = x_start if x_start >= 0 else 0
+        y_start = y_start if y_start >= 0 else 0
+        x_end   = x_end   if x_end < len(self.tiles[0]) else len(self.tiles[0])-1
+        y_end   = y_end   if y_end < len(self.tiles) else len(self.tiles)-1
+
+        for y in range(y_start, y_end):
+            for x in range(x_start, x_end):
+                tile = self.tiles[y][x]
                 location = (x * self.tile_size - camera.x, y * self.tile_size - camera.y)
                 image = self.tile_kinds[tile].image
                 screen.blit(image, location)
-                    #print(f"Error at {x} and {y}")

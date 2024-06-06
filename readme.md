@@ -1,10 +1,10 @@
-# Adventure Game in Pygame & Python
+# Adventure Game in Python & PyGame
 
-This game is a tile-based 2D adventure game created with Pygame. The playlist on YouTube for each step can be found here [Pygame - Adventure Game](https://youtube.com/playlist?list=PLn8cgfOA2qzeXxXe7DBWxX1UR5fJ4MDTb&si=BAjE1NPnPxDdv5rP).
+Would you like to build a 2D adventure game with Python and PyGame? This code is from a **free video series on YouTube** which you can watch to build a game like this step-by-step!
+
+The playlist on YouTube for each step can be found here [Pygame - Adventure Game](https://youtube.com/playlist?list=PLn8cgfOA2qzeXxXe7DBWxX1UR5fJ4MDTb&si=BAjE1NPnPxDdv5rP).
 
 ![Pygame Adventure Game](https://alexander-farrell.nyc3.digitaloceanspaces.com/media/adventure_game_banner.webp)
-
-![Adventure Game Banner](https://camo.githubusercontent.com/ce27db9ec79730f44759a37755b6ae782dce817b659bdfe5566834f3e802bce8/68747470733a2f2f616c6578616e6465722d66617272656c6c2e6e7963332e6469676974616c6f6365616e7370616365732e636f6d2f6d656469612f616476656e747572655f67616d655f62616e6e65722e77656270)
 
 ## Quickstart
 
@@ -19,4 +19,23 @@ This game is a tile-based 2D adventure game created with Pygame. The playlist on
 |         Item         |  Description  |
 |----------------------|---------------|
 | [content](./content) | Asset files (images, map data, etc.) is here |
+| [docs](./docs)       | Documentation for our game (coming soon) |
 | [src](./src)         | Python code for the game is here. |
+
+## Using the Code in Your Own Games
+
+You are absolutely allowed to use the code and assets from this game in your own games, even commercially, and even for closed source games you make, as long as you agree to the below license.
+
+My goal is to help you in making your own games, and I hope this work can be of value to you.
+
+### License
+
+Copyright 2024 Alexander Farrell
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the “Software”), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+(MIT License [Source](https://opensource.org/license/mit))

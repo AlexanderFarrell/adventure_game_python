@@ -18,6 +18,7 @@ class Sprite:
         self.is_ui = is_ui
 
     def delete(self):
+        from core.engine import engine
         engine.drawables.remove(self)
 
     def draw(self, screen):

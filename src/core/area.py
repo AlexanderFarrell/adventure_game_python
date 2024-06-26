@@ -18,15 +18,16 @@ class Area:
 
     def load_file(self, area_file):
         from data.objects import create_entity
-        from core.engine import engine
         
-        engine.reset()
 
         # Read all the data from the file
         file = open(map_folder_location + "/" + area_file, "r")
         data = file.read()
         file.close()
         self.name = area_file.split(".")[0].title().replace("_", " ")
+
+        from core.engine import engine
+        engine.reset()
 
 
         # Split up the data by minus signs

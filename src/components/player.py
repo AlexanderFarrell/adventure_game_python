@@ -12,8 +12,6 @@ movement_speed = 2
 
 class Player:
     def __init__(self):
-        from core.engine import engine
-        engine.active_objs.append(self)
         self.loc_label = Entity(Label("main/EBGaramond-Regular.ttf", 
                                          "X: 0 - Y: 0")).get(Label)
         self.area_label = Entity(Label("main/EBGaramond-Regular.ttf", 
@@ -24,6 +22,9 @@ class Player:
 
         self.loc_label.entity.x = 10
         self.area_label.entity.x = 10
+        
+        from core.engine import engine
+        engine.active_objs.append(self)
 
     def update(self):
         self.loc_label.set_text(f"X: {self.entity.x} - Y: {self.entity.y}")
